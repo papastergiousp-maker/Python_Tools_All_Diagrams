@@ -8,16 +8,36 @@
             y=l.getElementsByTagName(r)[0];y.parentNode.insertBefore(t,y);
         })(window, document, "clarity", "script", "vr1rwybrwi");
 
-        // Λειτουργία Αντιγραφής & Εναλλαγής Κειμένου
-        function copyAndNotify(text, element, originalText) {
-            navigator.clipboard.writeText(text);
-            const icon = element.querySelector('i').outerHTML;
-            element.innerHTML = icon + ' Copied!';
-            element.style.background = "#28a745";
-            setTimeout(() => {
-                element.innerHTML = icon + ' ' + originalText;
-                element.style.background = "";
-            }, 2000);
+        // Έξυπνη Λειτουργία Επικοινωνίας
+        function handleContact(type, value, element, originalText) {
+            const isMobile = /iPhone|iPad|iPod|Android/i.test(navigator.userAgent);
+
+            if (isMobile) {
+                // Αν είναι κινητό, άνοιξε την εφαρμογή (τηλέφωνο ή email)
+                if (type === 'tel') window.location.href = "tel:" + value;
+                if (type === 'mail') window.location.href = "mailto:" + value;
+            } else {
+                // Αν είναι υπολογιστής
+                if (type === 'mail') {
+                    navigator.clipboard.writeText(value);
+                    const icon = element.querySelector('i').outerHTML;
+                    element.innerHTML = icon + ' Copied!';
+                    element.style.background = "#28a745";
+                    setTimeout(() => {
+                        element.innerHTML = icon + ' ' + originalText;
+                        element.style.background = "";
+                    }, 2000);
+                }
+                if (type === 'tel') {
+                    const icon = element.querySelector('i').outerHTML;
+                    element.innerHTML = icon + ' ' + value; // Εμφανίζει το νούμερο
+                    element.style.background = "#0056b3";
+                    setTimeout(() => {
+                        element.innerHTML = icon + ' ' + originalText;
+                        element.style.background = "";
+                    }, 5000); // Το αφήνουμε 5 δευτερόλεπτα για να προλάβει να το δει
+                }
+            }
         }
     </script>
 
@@ -94,11 +114,11 @@
 
             <div class="cv-label"><i class="fas fa-paper-plane"></i> Get In Touch</div>
             
-            <button class="btn linkedin" onclick="copyAndNotify('papastergiousp@gmail.com', this, 'Email Me')">
+            <button class="btn linkedin" onclick="handleContact('mail', 'papastergiousp@gmail.com', this, 'Email Me')">
                 <i class="fas fa-envelope"></i> Email Me
             </button>
 
-            <button class="btn" style="background: #28a745;" onclick="copyAndNotify('+306982317823', this, 'Call Me')">
+            <button class="btn" style="background: #28a745;" onclick="handleContact('tel', '+306982317823', this, 'Call Me')">
                 <i class="fas fa-phone"></i> Call Me
             </button>
             
