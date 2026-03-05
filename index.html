@@ -7,6 +7,19 @@
             t=l.createElement(r);t.async=1;t.src="https://www.clarity.ms/tag/"+i;
             y=l.getElementsByTagName(r)[0];y.parentNode.insertBefore(t,y);
         })(window, document, "clarity", "script", "vr1rwybrwi");
+
+        // Λειτουργία Αντιγραφής
+        function copyToClipboard(text, element) {
+            navigator.clipboard.writeText(text).then(() => {
+                const originalText = element.innerHTML;
+                element.innerHTML = '<i class="fas fa-check"></i> Copied!';
+                element.style.background = "#28a745";
+                setTimeout(() => {
+                    element.innerHTML = originalText;
+                    element.style.background = "";
+                }, 2000);
+            });
+        }
     </script>
 
     <meta charset="UTF-8">
@@ -23,10 +36,9 @@
         .description { font-size: 0.95rem; color: #555; line-height: 1.6; margin-bottom: 20px; }
         .skills-container { display: flex; flex-wrap: wrap; justify-content: center; gap: 8px; margin-bottom: 25px; }
         .skill-tag { background: #eef2f7; color: #333; padding: 6px 12px; border-radius: 20px; font-size: 0.85rem; font-weight: 600; border: 1px solid #d1d9e6; }
-        .cert-tag { background: #fff3cd; color: #856404; border: 1px solid #ffeeba; }
         .fintech-tag { background: #d1ecf1; color: #0c5460; border: 1px solid #bee5eb; }
         .grid { display: grid; grid-template-columns: 1fr 1fr; gap: 15px; }
-        .btn { display: flex; align-items: center; justify-content: center; gap: 8px; padding: 14px; text-decoration: none; color: white; border-radius: 10px; font-weight: 600; transition: all 0.3s ease; font-size: 0.95rem; cursor: pointer; position: relative; overflow: hidden; }
+        .btn { display: flex; align-items: center; justify-content: center; gap: 8px; padding: 14px; text-decoration: none; color: white; border-radius: 10px; font-weight: 600; transition: all 0.3s ease; font-size: 0.95rem; cursor: pointer; border: none; width: 100%; }
         .linkedin { background: #0077b5; }
         .tableau { background: #e97627; }
         .github { background: #24292e; }
@@ -37,18 +49,10 @@
         .btn:hover { transform: translateY(-3px); box-shadow: 0 5px 15px rgba(0,0,0,0.1); opacity: 0.9; }
         .cv-label { grid-column: span 2; margin-top: 15px; margin-bottom: 5px; font-weight: 600; color: var(--primary); font-size: 1rem; }
         .footer-note { font-size: 0.7rem; color: #aaa; margin-top: 25px; grid-column: span 2; }
-
-        /* Hover Effect για Email και Τηλέφωνο */
-        .btn-contact .info-text { display: none; }
-        .btn-contact:hover .default-text { display: none; }
-        .btn-contact:hover .info-text { display: inline; }
-
+        
         @media (max-width: 600px) {
             .grid { grid-template-columns: 1fr; }
             .business-dash, .cv-label, .footer-note { grid-column: auto; }
-            /* Στο κινητό απενεργοποιούμε το hover και δείχνουμε το απλό κείμενο */
-            .btn-contact .info-text { display: none !important; }
-            .btn-contact .default-text { display: inline !important; }
         }
     </style>
 </head>
@@ -73,8 +77,8 @@
             <span class="skill-tag">TABLEAU</span>
             <span class="skill-tag">POWER BI</span>
             <span class="skill-tag">DAX ANALYSIS</span>
-            <span class="skill-tag cert-tag">HACCP</span>
-            <span class="skill-tag cert-tag">ISO 22000</span>
+            <span class="skill-tag">SPSS</span>
+            <span class="skill-tag">ISO 22000</span>
         </div>
 
         <div class="grid">
@@ -89,19 +93,15 @@
             <a href="CV_Papastergiou_GR.pdf" class="btn cv-gr" target="_blank">Greek Version</a>
             <a href="CV_Papastergiou_EN.pdf" class="btn cv-en" target="_blank">English Version</a>
 
-            <div class="cv-label"><i class="fas fa-paper-plane"></i> Get In Touch</div>
+            <div class="cv-label"><i class="fas fa-paper-plane"></i> Get In Touch (Click to Copy)</div>
             
-            <a href="mailto:papastergiousp@gmail.com" class="btn linkedin btn-contact">
-                <i class="fas fa-envelope"></i>
-                <span class="default-text">Email Me</span>
-                <span class="info-text">papastergiousp@gmail.com</span>
-            </a>
+            <button class="btn linkedin" onclick="copyToClipboard('papastergiousp@gmail.com', this)">
+                <i class="fas fa-envelope"></i> papastergiousp@gmail.com
+            </button>
 
-            <a href="tel:+306982317823" class="btn btn-contact" style="background: #28a745;">
-                <i class="fas fa-phone"></i>
-                <span class="default-text">Call Me</span>
-                <span class="info-text">+30 698 231 7823</span>
-            </a>
+            <button class="btn" style="background: #28a745;" onclick="copyToClipboard('+306982317823', this)">
+                <i class="fas fa-phone"></i> +30 698 231 7823
+            </button>
             
             <div class="footer-note">This site uses basic analytics to improve user experience.</div>
         </div>
