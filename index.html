@@ -9,18 +9,11 @@
         })(window, document, "clarity", "script", "vr1rwybrwi");
     </script>
 
-    <meta name="description" content="Σπύρος Παπαστεργίου - Οικονομολόγος & Junior Data Analyst. Εξειδίκευση σε SQL, Tableau, Power BI, Python for Finance και Analytics.">
-    <meta name="keywords" content="Σπύρος Παπαστεργίου, Spyros Papastergiou, Data Analyst, FinTech, SQL, Tableau, Power BI, Python for Finance, HACCP, ISO 22000, phytai">
-    <meta name="author" content="Σπύρος Παπαστεργίου">
-    
-    <meta property="og:title" content="Σπύρος Παπαστεργίου | Portfolio">
-    <meta property="og:description" content="Economist & Junior Data Analyst Portfolio. Δείτε τα projects μου σε SQL, Tableau και Power BI.">
-    <meta property="og:url" content="https://www.phytai.com">
-    <meta property="og:type" content="website">
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Σπύρος Παπαστεργίου | Portfolio</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    
     <style>
         :root { --primary: #003366; --secondary: #0078d4; --accent: #28a745; --bg: #f4f7f9; }
         body { font-family: 'Segoe UI', Tahoma, sans-serif; background: var(--bg); display: flex; align-items: center; justify-content: center; min-height: 100vh; margin: 0; padding: 20px; }
@@ -33,7 +26,7 @@
         .cert-tag { background: #fff3cd; color: #856404; border: 1px solid #ffeeba; }
         .fintech-tag { background: #d1ecf1; color: #0c5460; border: 1px solid #bee5eb; }
         .grid { display: grid; grid-template-columns: 1fr 1fr; gap: 15px; }
-        .btn { display: flex; align-items: center; justify-content: center; gap: 8px; padding: 14px; text-decoration: none; color: white; border-radius: 10px; font-weight: 600; transition: 0.3s; font-size: 0.95rem; }
+        .btn { display: flex; align-items: center; justify-content: center; gap: 8px; padding: 14px; text-decoration: none; color: white; border-radius: 10px; font-weight: 600; transition: 0.3s; font-size: 0.95rem; cursor: pointer; }
         .linkedin { background: #0077b5; }
         .tableau { background: #e97627; }
         .github { background: #24292e; }
@@ -44,6 +37,17 @@
         .btn:hover { transform: translateY(-3px); box-shadow: 0 5px 15px rgba(0,0,0,0.1); opacity: 0.9; }
         .cv-label { grid-column: span 2; margin-top: 15px; margin-bottom: 5px; font-weight: 600; color: var(--primary); font-size: 1rem; }
         .footer-note { font-size: 0.7rem; color: #aaa; margin-top: 25px; grid-column: span 2; }
+
+        /* Έλεγχος κειμένου ανάλογα με την οθόνη */
+        .desktop-text { display: inline; }
+        .mobile-text { display: none; }
+
+        @media (max-width: 600px) {
+            .desktop-text { display: none; }
+            .mobile-text { display: inline; }
+            .grid { grid-template-columns: 1fr; }
+            .business-dash, .cv-label, .footer-note { grid-column: auto; }
+        }
     </style>
 </head>
 <body>
@@ -72,10 +76,10 @@
         </div>
 
         <div class="grid">
-            <a href="https://www.linkedin.com/in/spyros-papastergiou" class="btn linkedin" target="_blank"><i class="fab fa-linkedin"></i> LinkedIn Profile</a>
-            <a href="https://public.tableau.com/app/profile/spyros.papastergiou" class="btn tableau" target="_blank"><i class="fas fa-chart-bar"></i> Tableau Portfolio</a>
-            <a href="https://github.com/papastergiousp-maker/My_Projects" class="btn github" target="_blank"><i class="fab fa-github"></i> GitHub Projects</a>
-            <a href="https://github.com/papastergiousp-maker/Power-BI" class="btn powerbi" target="_blank"><i class="fas fa-bolt"></i> Power BI Projects</a>
+            <a href="https://www.linkedin.com/in/spyros-papastergiou" class="btn linkedin" target="_blank"><i class="fab fa-linkedin"></i> LinkedIn</a>
+            <a href="https://public.tableau.com/app/profile/spyros.papastergiou" class="btn tableau" target="_blank"><i class="fas fa-chart-bar"></i> Tableau</a>
+            <a href="https://github.com/papastergiousp-maker/My_Projects" class="btn github" target="_blank"><i class="fab fa-github"></i> GitHub</a>
+            <a href="https://github.com/papastergiousp-maker/Power-BI" class="btn powerbi" target="_blank"><i class="fas fa-bolt"></i> Power BI</a>
             
             <a href="/dashboard/" class="btn business-dash"><i class="fas fa-chart-line"></i> Business Analytics Dashboard</a>
             
@@ -83,13 +87,19 @@
             <a href="CV_Papastergiou_GR.pdf" class="btn cv-gr" target="_blank">Greek Version</a>
             <a href="CV_Papastergiou_EN.pdf" class="btn cv-en" target="_blank">English Version</a>
 
-           <div class="cv-label"><i class="fas fa-paper-plane"></i> Get In Touch</div>
-<a href="mailto:papastergiousp@gmail.com" class="btn linkedin" title="papastergiousp@gmail.com">
-    <i class="fas fa-envelope"></i> Email Me
-</a>
-<a href="tel:+306982317823" class="btn" style="background: #28a745;" title="+30 698 231 7823">
-    <i class="fas fa-phone"></i> +30 698 231 7823
-</a>
+            <div class="cv-label"><i class="fas fa-paper-plane"></i> Get In Touch</div>
+            
+            <a href="mailto:papastergiousp@gmail.com" class="btn linkedin">
+                <i class="fas fa-envelope"></i>
+                <span class="desktop-text">papastergiousp@gmail.com</span>
+                <span class="mobile-text">Email Me</span>
+            </a>
+
+            <a href="tel:+306982317823" class="btn" style="background: #28a745;">
+                <i class="fas fa-phone"></i>
+                <span class="desktop-text">+30 698 231 7823</span>
+                <span class="mobile-text">Call Me</span>
+            </a>
             
             <div class="footer-note">This site uses basic analytics to improve user experience.</div>
         </div>
