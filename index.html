@@ -8,10 +8,9 @@
             y=l.getElementsByTagName(r)[0];y.parentNode.insertBefore(t,y);
         })(window, document, "clarity", "script", "vr1rwybrwi");
 
-        // Έξυπνη Λειτουργία Επικοινωνίας
+        // Έξυπνη Λειτουργία Επικοινωνίας (Mobile vs Desktop)
         function handleContact(type, value, element, originalText) {
             const isMobile = /iPhone|iPad|iPod|Android/i.test(navigator.userAgent);
-
             if (isMobile) {
                 if (type === 'tel') window.location.href = "tel:" + value;
                 if (type === 'mail') window.location.href = "mailto:" + value;
@@ -56,95 +55,111 @@
             min-height: 100vh; 
             margin: 0; 
             padding: 20px; 
-            position: relative; /* Απαραίτητο για τα floating icons */
-            overflow-x: hidden; /* Κρύβει τα icons αν βγουν έξω */
+            position: relative;
+            overflow-x: hidden;
         }
         
-        /* Floating Data Icons Styles */
-        .data-icon {
-            position: absolute;
-            color: #d1d9e6; /* Πολύ ανοιχτό γκρι-μπλε */
-            opacity: 0.15; /* Πολύ χαμηλή διαφάνεια */
-            font-size: 5rem; /* Μεγάλο μέγεθος */
-            z-index: 0; /* Πίσω από την κάρτα */
-            pointer-events: none; /* Δεν επηρεάζουν τα κλικ */
-        }
+        /* Floating Data Icons Background */
+        .data-icon { position: absolute; color: #d1d9e6; opacity: 0.12; font-size: 5rem; z-index: 0; pointer-events: none; }
+        .icon-1 { top: 10%; left: 5%; transform: rotate(-15deg); font-size: 6rem; }
+        .icon-2 { top: 70%; left: 15%; transform: rotate(10deg); font-size: 5rem; }
+        .icon-3 { top: 20%; right: 10%; transform: rotate(20deg); font-size: 7rem; }
+        .icon-4 { top: 85%; right: 5%; transform: rotate(-10deg); font-size: 6rem; }
+        .icon-5 { top: 45%; left: 85%; transform: rotate(5deg); font-size: 4rem; }
+        .icon-6 { top: 5%; right: 40%; transform: rotate(-5deg); font-size: 3rem; }
 
-        /* Τοποθέτηση "Χυμά" των Icons */
-        .icon-1 { top: 10%; left: 5%; font-size: 6rem; transform: rotate(-15deg); } /* Line Chart */
-        .icon-2 { top: 70%; left: 15%; font-size: 5rem; transform: rotate(10deg); }  /* Bar Chart */
-        .icon-3 { top: 20%; right: 10%; font-size: 7rem; transform: rotate(20deg); } /* Pie Chart */
-        .icon-4 { top: 80%; right: 5%; font-size: 6rem; transform: rotate(-10deg); }  /* Area Chart */
-        .icon-5 { top: 45%; left: 80%; font-size: 4rem; transform: rotate(5deg); }   /* Scatter Plot */
-        .icon-6 { top: 5%; right: 40%; font-size: 3rem; transform: rotate(-5deg); }   /* SQL Database */
-
-        .card { background: white; padding: 40px; border-radius: 20px; box-shadow: 0 15px 35px rgba(0,0,0,0.15); text-align: center; max-width: 650px; width: 100%; position: relative; z-index: 1; /* Μπροστά από τα icons */ }
+        .card { background: white; padding: 40px; border-radius: 20px; box-shadow: 0 15px 35px rgba(0,0,0,0.15); text-align: center; max-width: 650px; width: 100%; position: relative; z-index: 1; }
         
-        h1 { color: var(--primary); margin-bottom: 5px; font-size: 2rem; }
-        h2 { color: var(--secondary); font-weight: 500; font-size: 1.2rem; margin-top: 0; margin-bottom: 15px; }
+        h1 { color: var(--primary); margin-bottom: 5px; font-size: 2.2rem; }
+        h2 { color: var(--secondary); font-weight: 500; font-size: 1.3rem; margin-top: 0; margin-bottom: 15px; }
         .description { font-size: 0.95rem; color: #555; line-height: 1.6; margin-bottom: 20px; }
-        .skills-container { display: flex; flex-wrap: wrap; justify-content: center; gap: 8px; margin-bottom: 25px; }
-        .skill-tag { background: #eef2f7; color: #333; padding: 6px 12px; border-radius: 20px; font-size: 0.85rem; font-weight: 600; border: 1px solid #d1d9e6; }
+        
+        .section-title { font-size: 0.75rem; color: var(--secondary); font-weight: 700; margin-bottom: 8px; text-transform: uppercase; letter-spacing: 1px; margin-top: 15px; }
+        .skills-container { display: flex; flex-wrap: wrap; justify-content: center; gap: 8px; margin-bottom: 10px; }
+        
+        .skill-tag { background: #eef2f7; color: #333; padding: 6px 14px; border-radius: 20px; font-size: 0.85rem; font-weight: 600; border: 1px solid #d1d9e6; }
         .fintech-tag { background: #d1ecf1; color: #0c5460; border: 1px solid #bee5eb; }
-        .grid { display: grid; grid-template-columns: 1fr 1fr; gap: 15px; }
+        .cert-tag { background: #fff3cd; color: #856404; border: 1px solid #ffeeba; }
+        
+        .grid { display: grid; grid-template-columns: 1fr 1fr; gap: 15px; margin-top: 20px; }
         .btn { display: flex; align-items: center; justify-content: center; gap: 8px; padding: 14px; text-decoration: none; color: white; border-radius: 10px; font-weight: 600; transition: all 0.3s ease; font-size: 0.95rem; cursor: pointer; border: none; }
+        
         .linkedin { background: #0077b5; }
         .tableau { background: #e97627; }
         .github { background: #24292e; }
         .powerbi { background: #f2c811; color: #333; }
-        .business-dash { background: #6f42c1; grid-column: span 2; }
+        .business-dash { background: linear-gradient(135deg, #6f42c1, #a020f0); grid-column: span 2; font-size: 1.05rem; }
         .cv-gr { background: #dc3545; }
         .cv-en { background: #343a40; }
-        .btn:hover { transform: translateY(-3px); box-shadow: 0 5px 15px rgba(0,0,0,0.1); opacity: 0.9; }
+        
+        .btn:hover { transform: translateY(-3px); box-shadow: 0 5px 15px rgba(0,0,0,0.2); opacity: 0.9; }
         .cv-label { grid-column: span 2; margin-top: 15px; margin-bottom: 5px; font-weight: 600; color: var(--primary); font-size: 1rem; }
         .footer-note { font-size: 0.7rem; color: #aaa; margin-top: 25px; grid-column: span 2; }
         
         @media (max-width: 600px) {
             .grid { grid-template-columns: 1fr; }
             .business-dash, .cv-label, .footer-note { grid-column: auto; }
-            /* Κρύβουμε τα icons στα κινητά για να μην στριμώχνονται */
             .data-icon { display: none; }
+            .card { padding: 25px; }
         }
     </style>
 </head>
 <body>
-    <i class="fas fa-chart-line data-icon icon-1"></i> <i class="fas fa-chart-bar data-icon icon-2"></i>  <i class="fas fa-chart-pie data-icon icon-3"></i>  <i class="fas fa-chart-area data-icon icon-4"></i> <i class="fas fa-project-diagram data-icon icon-5"></i> <i class="fas fa-database data-icon icon-6"></i> <div class="card">
+    <i class="fas fa-chart-line data-icon icon-1"></i>
+    <i class="fas fa-chart-bar data-icon icon-2"></i>
+    <i class="fas fa-chart-pie data-icon icon-3"></i>
+    <i class="fas fa-chart-area data-icon icon-4"></i>
+    <i class="fas fa-project-diagram data-icon icon-5"></i>
+    <i class="fas fa-database data-icon icon-6"></i>
+
+    <div class="card">
         <div style="display: inline-block; background: #e8f5e9; color: #2e7d32; padding: 4px 12px; border-radius: 15px; font-size: 0.75rem; font-weight: 700; margin-bottom: 10px;">
             <i class="fas fa-circle" style="font-size: 0.6rem; vertical-align: middle;"></i> OPEN TO WORK
         </div>
 
         <h1>Σπύρος Παπαστεργίου</h1>
-        <h2>Οικονομολόγος & Junior Data Analyst</h2>
+        <h2>Economist & Financial Data Analyst</h2>
         
         <p class="description">
-            Εξειδικευμένος στην ανάλυση δεδομένων με υπόβαθρο στα Οικονομικά και το FinTech. 
-            Εμπειρία σε Business Intelligence εργαλεία και Ποιοτικό Έλεγχο.
+            Εξειδικευμένος στην οικονομική ανάλυση και το FinTech. 
+            Μετατρέπω σύνθετα δεδομένα σε στρατηγικές αποφάσεις μέσω Predictive Modeling και Risk Analysis.
         </p>
 
+        <div class="section-title">Technical Stack</div>
         <div class="skills-container">
-            <span class="skill-tag fintech-tag">FINTECH ANALYST</span>
-            <span class="skill-tag">SQL</span>
-            <span class="skill-tag">PYTHON FOR FINANCE</span>
-            <span class="skill-tag">TABLEAU</span>
-            <span class="skill-tag">POWER BI</span>
-            <span class="skill-tag">DAX ANALYSIS</span>
-            <span class="skill-tag">SPSS</span>
-            <span class="skill-tag">ISO 22000</span>
+            <span class="skill-tag">SQL (MySQL)</span>
+            <span class="skill-tag">Python for Finance</span>
+            <span class="skill-tag">Tableau / Power BI</span>
+            <span class="skill-tag">Advanced Excel</span>
+        </div>
+
+        <div class="section-title">Strategy & Risk</div>
+        <div class="skills-container">
+            <span class="skill-tag fintech-tag">Financial Modeling</span>
+            <span class="skill-tag fintech-tag">Predictive Analytics</span>
+            <span class="skill-tag fintech-tag">Risk Analysis</span>
+            <span class="skill-tag fintech-tag">Forecasting</span>
+        </div>
+
+        <div class="section-title">Certifications</div>
+        <div class="skills-container">
+            <span class="skill-tag cert-tag">Financial Data Analytics (Workearly)</span>
+            <span class="skill-tag cert-tag">ISO 22000 / HACCP</span>
         </div>
 
         <div class="grid">
-            <a href="https://www.linkedin.com/in/spyros-papastergiou" class="btn linkedin" target="_blank"><i class="fab fa-linkedin"></i> LinkedIn Profile</a>
-            <a href="https://public.tableau.com/app/profile/spyros.papastergiou" class="btn tableau" target="_blank"><i class="fas fa-chart-bar"></i> Tableau Portfolio</a>
-            <a href="https://github.com/papastergiousp-maker/My_Projects" class="btn github" target="_blank"><i class="fab fa-github"></i> GitHub Projects</a>
-            <a href="https://github.com/papastergiousp-maker/Power-BI" class="btn powerbi" target="_blank"><i class="fas fa-bolt"></i> Power BI Projects</a>
+            <a href="https://www.linkedin.com/in/spyros-papastergiou" class="btn linkedin" target="_blank"><i class="fab fa-linkedin"></i> LinkedIn</a>
+            <a href="https://public.tableau.com/app/profile/spyros.papastergiou" class="btn tableau" target="_blank"><i class="fas fa-chart-bar"></i> Tableau</a>
+            <a href="https://github.com/papastergiousp-maker/My_Projects" class="btn github" target="_blank"><i class="fab fa-github"></i> GitHub</a>
+            <a href="https://github.com/papastergiousp-maker/Power-BI" class="btn powerbi" target="_blank"><i class="fas fa-bolt"></i> Power BI</a>
             
-            <a href="/dashboard/" class="btn business-dash"><i class="fas fa-chart-line"></i> Business Analytics Dashboard</a>
+            <a href="/dashboard/" class="btn business-dash"><i class="fas fa-chart-line"></i> Interactive Financial Analytics Dashboard</a>
             
-            <div class="cv-label"><i class="fas fa-file-pdf"></i> Download Full CV</div>
+            <div class="cv-label"><i class="fas fa-file-pdf"></i> Curriculum Vitae</div>
             <a href="CV_Papastergiou_GR.pdf" class="btn cv-gr" target="_blank">Greek Version</a>
             <a href="CV_Papastergiou_EN.pdf" class="btn cv-en" target="_blank">English Version</a>
 
-            <div class="cv-label"><i class="fas fa-paper-plane"></i> Get In Touch</div>
+            <div class="cv-label"><i class="fas fa-paper-plane"></i> Contact</div>
             
             <button class="btn linkedin" onclick="handleContact('mail', 'papastergiousp@gmail.com', this, 'Email Me')">
                 <i class="fas fa-envelope"></i> Email Me
@@ -154,7 +169,7 @@
                 <i class="fas fa-phone"></i> Call Me
             </button>
             
-            <div class="footer-note">This site uses basic analytics to improve user experience.</div>
+            <div class="footer-note">Built for Data-Driven Financial Strategy | © 2026 phytai.com</div>
         </div>
     </div>
 </body>
