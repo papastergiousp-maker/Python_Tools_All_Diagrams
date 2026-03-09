@@ -1,6 +1,11 @@
 <!DOCTYPE html>
 <html lang="el">
 <head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Σπύρος Παπαστεργίου | Portfolio</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    
     <script type="text/javascript">
         (function(c,l,a,r,i,t,y){
             c[a]=c[a]||function(){(c[a].q=c[a].q||[]).push(arguments)};
@@ -11,13 +16,14 @@
         // Έξυπνη Λειτουργία Επικοινωνίας (Mobile vs Desktop)
         function handleContact(type, value, element, originalText) {
             const isMobile = /iPhone|iPad|iPod|Android/i.test(navigator.userAgent);
+            const icon = element.querySelector('i').outerHTML;
+            
             if (isMobile) {
                 if (type === 'tel') window.location.href = "tel:" + value;
                 if (type === 'mail') window.location.href = "mailto:" + value;
             } else {
                 if (type === 'mail') {
                     navigator.clipboard.writeText(value);
-                    const icon = element.querySelector('i').outerHTML;
                     element.innerHTML = icon + ' Copied!';
                     element.style.background = "#28a745";
                     setTimeout(() => {
@@ -26,7 +32,6 @@
                     }, 2000);
                 }
                 if (type === 'tel') {
-                    const icon = element.querySelector('i').outerHTML;
                     element.innerHTML = icon + ' ' + value;
                     element.style.background = "#0056b3";
                     setTimeout(() => {
@@ -38,11 +43,6 @@
         }
     </script>
 
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Σπύρος Παπαστεργίου | Portfolio</title>
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
-    
     <style>
         :root { --primary: #003366; --secondary: #0078d4; --accent: #28a745; --bg: #f4f7f9; }
         
@@ -96,9 +96,11 @@
         .cv-label { grid-column: span 2; margin-top: 15px; margin-bottom: 5px; font-weight: 600; color: var(--primary); font-size: 1rem; }
         .footer-note { font-size: 0.7rem; color: #aaa; margin-top: 25px; grid-column: span 2; }
         
+        hr { border: 0; border-top: 1px solid #eee; margin: 30px 0; grid-column: span 2; width: 100%; }
+
         @media (max-width: 600px) {
             .grid { grid-template-columns: 1fr; }
-            .business-dash, .cv-label, .footer-note { grid-column: auto; }
+            .business-dash, .cv-label, .footer-note, hr { grid-column: auto; }
             .data-icon { display: none; }
             .card { padding: 25px; }
         }
@@ -125,6 +127,31 @@
             Μετατρέπω σύνθετα δεδομένα σε στρατηγικές αποφάσεις μέσω Predictive Modeling και Risk Analysis.
         </p>
 
+        <div class="grid">
+            <a href="https://www.linkedin.com/in/spyros-papastergiou" class="btn linkedin" target="_blank" rel="noopener noreferrer"><i class="fab fa-linkedin"></i> LinkedIn</a>
+            <a href="https://public.tableau.com/app/profile/spyros.papastergiou" class="btn tableau" target="_blank" rel="noopener noreferrer"><i class="fas fa-chart-bar"></i> Tableau</a>
+            <a href="https://github.com/papastergiousp-maker/My_Projects" class="btn github" target="_blank" rel="noopener noreferrer"><i class="fab fa-github"></i> GitHub</a>
+            <a href="https://github.com/papastergiousp-maker/Power-BI" class="btn powerbi" target="_blank" rel="noopener noreferrer"><i class="fas fa-bolt"></i> Power BI</a>
+            
+            <a href="/dashboard/" class="btn business-dash"><i class="fas fa-chart-line"></i> Interactive Financial Analytics Dashboard</a>
+            
+            <div class="cv-label"><i class="fas fa-file-pdf"></i> Curriculum Vitae</div>
+            <a href="CV_Papastergiou_GR.pdf" class="btn cv-gr" target="_blank">Greek Version</a>
+            <a href="CV_Papastergiou_EN.pdf" class="btn cv-en" target="_blank">English Version</a>
+
+            <div class="cv-label"><i class="fas fa-paper-plane"></i> Contact</div>
+            
+            <button class="btn linkedin" onclick="handleContact('mail', 'papastergiousp@gmail.com', this, 'Email Me')">
+                <i class="fas fa-envelope"></i> Email Me
+            </button>
+
+            <button class="btn" style="background: #28a745;" onclick="handleContact('tel', '+306982317823', this, 'Call Me')">
+                <i class="fas fa-phone"></i> Call Me
+            </button>
+
+            <hr>
+        </div>
+
         <div class="section-title">Technical Stack</div>
         <div class="skills-container">
             <span class="skill-tag">SQL (MySQL)</span>
@@ -147,30 +174,7 @@
             <span class="skill-tag cert-tag">ISO 22000 / HACCP</span>
         </div>
 
-        <div class="grid">
-            <a href="https://www.linkedin.com/in/spyros-papastergiou" class="btn linkedin" target="_blank"><i class="fab fa-linkedin"></i> LinkedIn</a>
-            <a href="https://public.tableau.com/app/profile/spyros.papastergiou" class="btn tableau" target="_blank"><i class="fas fa-chart-bar"></i> Tableau</a>
-            <a href="https://github.com/papastergiousp-maker/My_Projects" class="btn github" target="_blank"><i class="fab fa-github"></i> GitHub</a>
-            <a href="https://github.com/papastergiousp-maker/Power-BI" class="btn powerbi" target="_blank"><i class="fas fa-bolt"></i> Power BI</a>
-            
-            <a href="/dashboard/" class="btn business-dash"><i class="fas fa-chart-line"></i> Interactive Financial Analytics Dashboard</a>
-            
-            <div class="cv-label"><i class="fas fa-file-pdf"></i> Curriculum Vitae</div>
-            <a href="CV_Papastergiou_GR.pdf" class="btn cv-gr" target="_blank">Greek Version</a>
-            <a href="CV_Papastergiou_EN.pdf" class="btn cv-en" target="_blank">English Version</a>
-
-            <div class="cv-label"><i class="fas fa-paper-plane"></i> Contact</div>
-            
-            <button class="btn linkedin" onclick="handleContact('mail', 'papastergiousp@gmail.com', this, 'Email Me')">
-                <i class="fas fa-envelope"></i> Email Me
-            </button>
-
-            <button class="btn" style="background: #28a745;" onclick="handleContact('tel', '+306982317823', this, 'Call Me')">
-                <i class="fas fa-phone"></i> Call Me
-            </button>
-            
-            <div class="footer-note">Built for Data-Driven Financial Strategy | © 2026 phytai.com</div>
-        </div>
+        <div class="footer-note" style="grid-column: span 2; margin-top: 25px;">Built for Data-Driven Financial Strategy | © 2026 phytai.com</div>
     </div>
 </body>
 </html>
