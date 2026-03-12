@@ -1,9 +1,9 @@
 <!DOCTYPE html>
-<html lang="el">
+<html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Σπύρος Παπαστεργίου | Portfolio</title>
+    <title>Spyros Papastergiou | Portfolio</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
     
     <script type="text/javascript">
@@ -13,7 +13,7 @@
             y=l.getElementsByTagName(r)[0];y.parentNode.insertBefore(t,y);
         })(window, document, "clarity", "script", "vr1rwybrwi");
 
-        // Έξυπνη Λειτουργία Επικοινωνίας (Mobile vs Desktop)
+        // Smart Contact Handling (Mobile vs Desktop)
         function handleContact(type, value, element, originalText) {
             const isMobile = /iPhone|iPad|iPod|Android/i.test(navigator.userAgent);
             const icon = element.querySelector('i').outerHTML;
@@ -59,7 +59,6 @@
             overflow-x: hidden;
         }
         
-        /* Floating Data Icons Background */
         .data-icon { position: absolute; color: #d1d9e6; opacity: 0.12; font-size: 5rem; z-index: 0; pointer-events: none; }
         .icon-1 { top: 10%; left: 5%; transform: rotate(-15deg); font-size: 6rem; }
         .icon-2 { top: 70%; left: 15%; transform: rotate(10deg); font-size: 5rem; }
@@ -89,8 +88,7 @@
         .github { background: #24292e; }
         .powerbi { background: #f2c811; color: #333; }
         .business-dash { background: linear-gradient(135deg, #6f42c1, #a020f0); grid-column: span 2; font-size: 1.05rem; }
-        .cv-gr { background: #dc3545; }
-        .cv-en { background: #343a40; }
+        .cv-download { background: #dc3545; grid-column: span 2; }
         
         .btn:hover { transform: translateY(-3px); box-shadow: 0 5px 15px rgba(0,0,0,0.2); opacity: 0.9; }
         .cv-label { grid-column: span 2; margin-top: 15px; margin-bottom: 5px; font-weight: 600; color: var(--primary); font-size: 1rem; }
@@ -100,7 +98,7 @@
 
         @media (max-width: 600px) {
             .grid { grid-template-columns: 1fr; }
-            .business-dash, .cv-label, .footer-note, hr { grid-column: auto; }
+            .business-dash, .cv-label, .cv-download, .footer-note, hr { grid-column: auto; }
             .data-icon { display: none; }
             .card { padding: 25px; }
         }
@@ -119,12 +117,12 @@
             <i class="fas fa-circle" style="font-size: 0.6rem; vertical-align: middle;"></i> OPEN TO WORK
         </div>
 
-        <h1>Σπύρος Παπαστεργίου</h1>
+        <h1>Spyros Papastergiou</h1>
         <h2>Economist & Financial Data Analyst</h2>
         
         <p class="description">
-            Εξειδικευμένος στην οικονομική ανάλυση και το FinTech. 
-            Μετατρέπω σύνθετα δεδομένα σε στρατηγικές αποφάσεις μέσω Predictive Modeling και Risk Analysis.
+            Specialized in Financial Analysis and FinTech. 
+            Transforming complex data into strategic insights through Predictive Modeling and Risk Analysis.
         </p>
 
         <div class="grid">
@@ -135,9 +133,8 @@
             
             <a href="/dashboard/" class="btn business-dash"><i class="fas fa-chart-line"></i> Interactive Financial Analytics Dashboard</a>
             
-            <div class="cv-label"><i class="fas fa-file-pdf"></i> Download Full CV</div>
-            <a href="CV_Papastergiou_GR.pdf" class="btn cv-gr" target="_blank">Greek Version</a>
-            <a href="CV_Papastergiou_EN.pdf" class="btn cv-en" target="_blank">English Version</a>
+            <div class="cv-label"><i class="fas fa-file-pdf"></i> Curriculum Vitae</div>
+            <a href="CV_Papastergiou_EN.pdf" class="btn cv-download" target="_blank"><i class="fas fa-download"></i> Download Full CV</a>
 
             <div class="cv-label"><i class="fas fa-paper-plane"></i> Contact</div>
             
@@ -171,7 +168,7 @@
         <div class="section-title">Certifications</div>
         <div class="skills-container">
             <span class="skill-tag cert-tag">Financial Data Analytics (Workearly)</span>
-            <span class="skill-tag cert-tag">IMBA Economic University of Patras Business Administation of Agricultural Products and Food.</span>
+            <span class="skill-tag cert-tag">IMBA Economics - University of Patras</span>
         </div>
 
         <div class="footer-note" style="grid-column: span 2; margin-top: 25px;">This site uses basic analytics to optimize user experience. | © 2026 phytai.com</div>
