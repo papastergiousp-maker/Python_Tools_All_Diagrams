@@ -104,8 +104,16 @@
         .open-badge .dot { width: 7px; height: 7px; background: #2e7d32; border-radius: 50%; animation: pulse 1.5s infinite; }
         @keyframes pulse { 0%,100%{opacity:1} 50%{opacity:0.3} }
 
-        /* LANGUAGE TOGGLE */
-        .lang-toggle-wrap {
+        /* FADE IN ON SCROLL */
+        .fade-item {
+            opacity: 0;
+            transform: translateY(20px);
+            transition: opacity 0.5s ease, transform 0.5s ease;
+        }
+        .fade-item.visible {
+            opacity: 1;
+            transform: translateY(0);
+        }
             display: flex; justify-content: flex-end;
             margin-bottom: 8px;
         }
@@ -171,50 +179,51 @@
         </p>
 
         <div class="grid">
-            <a href="https://www.linkedin.com/in/spyros-papastergiou" class="btn linkedin" target="_blank" rel="noopener noreferrer"
-               onclick="clarity('set','btn_click','linkedin')">
-               <i class="fab fa-linkedin"></i> LinkedIn</a>
 
-            <a href="https://public.tableau.com/app/profile/spyros.papastergiou" class="btn tableau" target="_blank" rel="noopener noreferrer"
-               onclick="clarity('set','btn_click','tableau')">
-               <i class="fas fa-chart-bar"></i> Tableau</a>
-
-            <a href="https://github.com/papastergiousp-maker/My_Projects" class="btn github" target="_blank" rel="noopener noreferrer"
-               onclick="clarity('set','btn_click','github')">
-               <i class="fab fa-github"></i> GitHub</a>
-
-            <a href="https://github.com/papastergiousp-maker/Power-BI" class="btn powerbi" target="_blank" rel="noopener noreferrer"
-               onclick="clarity('set','btn_click','powerbi')">
-               <i class="fas fa-bolt"></i> Power BI</a>
-
-            <a href="/dashboard/" class="btn business-dash"
-               onclick="clarity('set','btn_click','dashboard')">
-               <i class="fas fa-chart-line"></i>
-               <span class="lang-en">Interactive Financial Analytics Dashboard</span>
-               <span class="lang-gr">Διαδραστικό Dashboard Χρηματοοικονομικής Ανάλυσης</span>
-            </a>
-
-            <a href="/cv" class="btn cv-page"
+            <a href="/cv" class="btn cv-page fade-item" style="grid-column: span 2;"
                onclick="clarity('set','btn_click','cv_page')">
                <i class="fas fa-id-card"></i>
                <span class="lang-en">View Full CV</span>
                <span class="lang-gr">Προβολή Βιογραφικού</span>
             </a>
 
-            <div class="cv-label">
+            <a href="https://www.linkedin.com/in/spyros-papastergiou" class="btn linkedin fade-item" target="_blank" rel="noopener noreferrer"
+               onclick="clarity('set','btn_click','linkedin')">
+               <i class="fab fa-linkedin"></i> LinkedIn</a>
+
+            <a href="https://public.tableau.com/app/profile/spyros.papastergiou" class="btn tableau fade-item" target="_blank" rel="noopener noreferrer"
+               onclick="clarity('set','btn_click','tableau')">
+               <i class="fas fa-chart-bar"></i> Tableau</a>
+
+            <a href="https://github.com/papastergiousp-maker/My_Projects" class="btn github fade-item" target="_blank" rel="noopener noreferrer"
+               onclick="clarity('set','btn_click','github')">
+               <i class="fab fa-github"></i> GitHub</a>
+
+            <a href="https://github.com/papastergiousp-maker/Power-BI" class="btn powerbi fade-item" target="_blank" rel="noopener noreferrer"
+               onclick="clarity('set','btn_click','powerbi')">
+               <i class="fas fa-bolt"></i> Power BI</a>
+
+            <a href="/dashboard/" class="btn business-dash fade-item"
+               onclick="clarity('set','btn_click','dashboard')">
+               <i class="fas fa-chart-line"></i>
+               <span class="lang-en">Interactive Financial Analytics Dashboard</span>
+               <span class="lang-gr">Διαδραστικό Dashboard Χρηματοοικονομικής Ανάλυσης</span>
+            </a>
+
+            <div class="cv-label fade-item">
                 <i class="fas fa-paper-plane"></i>
                 <span class="lang-en"> Contact</span>
                 <span class="lang-gr"> Επικοινωνία</span>
             </div>
 
-            <button class="btn linkedin"
+            <button class="btn linkedin fade-item"
                     onclick="clarity('set','btn_click','email'); handleContact('mail','papastergiousp@gmail.com',this, currentLang==='greek' ? 'Email' : 'Email Me')">
                 <i class="fas fa-envelope"></i>
                 <span class="lang-en">Email Me</span>
                 <span class="lang-gr">Email</span>
             </button>
 
-            <button class="btn" style="background:#28a745;"
+            <button class="btn fade-item" style="background:#28a745;"
                     onclick="clarity('set','btn_click','phone'); handleContact('tel','+306982317823',this, currentLang==='greek' ? 'Κλήση' : 'Call Me')">
                 <i class="fas fa-phone"></i>
                 <span class="lang-en">Call Me</span>
@@ -225,9 +234,9 @@
         </div>
 
         <!-- TECHNICAL STACK -->
-        <div class="section-title lang-en">Technical Stack</div>
-        <div class="section-title lang-gr">Τεχνικές Δεξιότητες</div>
-        <div class="skills-container">
+        <div class="section-title lang-en fade-item">Technical Stack</div>
+        <div class="section-title lang-gr fade-item">Τεχνικές Δεξιότητες</div>
+        <div class="skills-container fade-item">
             <span class="skill-tag">SQL</span>
             <span class="skill-tag">Python for Finance</span>
             <span class="skill-tag">Tableau / Power BI</span>
@@ -235,9 +244,9 @@
         </div>
 
         <!-- STRATEGY & RISK -->
-        <div class="section-title lang-en">Strategy & Risk</div>
-        <div class="section-title lang-gr">Στρατηγική & Ανάλυση Κινδύνου</div>
-        <div class="skills-container">
+        <div class="section-title lang-en fade-item">Strategy & Risk</div>
+        <div class="section-title lang-gr fade-item">Στρατηγική & Ανάλυση Κινδύνου</div>
+        <div class="skills-container fade-item">
             <span class="skill-tag fintech-tag">Financial Modeling</span>
             <span class="skill-tag fintech-tag">Predictive Analytics</span>
             <span class="skill-tag fintech-tag">Risk Analysis</span>
@@ -245,9 +254,9 @@
         </div>
 
         <!-- CERTIFICATIONS -->
-        <div class="section-title lang-en">Certifications</div>
-        <div class="section-title lang-gr">Πιστοποιήσεις</div>
-        <div class="skills-container">
+        <div class="section-title lang-en fade-item">Certifications</div>
+        <div class="section-title lang-gr fade-item">Πιστοποιήσεις</div>
+        <div class="skills-container fade-item">
             <span class="skill-tag cert-tag">Financial Data Analytics (Workearly)</span>
             <span class="skill-tag cert-tag">IMBA Economics - University of Patras</span>
         </div>
@@ -271,6 +280,21 @@
 
         const saved = localStorage.getItem('site_lang');
         if (saved) setLang(saved);
+
+        // FADE IN ON SCROLL
+        const fadeItems = document.querySelectorAll('.fade-item');
+        const observer = new IntersectionObserver(entries => {
+            entries.forEach((entry, i) => {
+                if (entry.isIntersecting) {
+                    setTimeout(() => {
+                        entry.target.classList.add('visible');
+                    }, i * 60);
+                    observer.unobserve(entry.target);
+                }
+            });
+        }, { threshold: 0.1 });
+
+        fadeItems.forEach(el => observer.observe(el));
     </script>
 </body>
 </html>

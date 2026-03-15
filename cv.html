@@ -133,6 +133,17 @@
 
         .cv-footer { text-align:center; padding:0 0 20px; font-size:.7rem; color:#94a3b8; }
 
+        /* SCROLL FADE IN */
+        .scroll-fade {
+            opacity: 0;
+            transform: translateY(14px);
+            transition: opacity 0.3s ease, transform 0.3s ease;
+        }
+        .scroll-fade.visible {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
         /* LANGUAGE SECTIONS */
         .lang-en, .lang-gr { transition:opacity .2s; }
         body.greek .lang-en { display:none; }
@@ -186,8 +197,8 @@
             <a href="tel:+306982317823" class="contact-item" onclick="clarity('set','contact_click','phone')">
                 <i class="fas fa-phone"></i> +30 698 231 7823
             </a>
-            <a href="mailto:papastergiousp@gmail.com" class="contact-item" onclick="clarity('set','contact_click','email')">
-                <i class="fas fa-envelope"></i> papastergiousp@gmail.com
+            <a href="/cdn-cgi/l/email-protection#dcacbdacbdafa8b9aebbb5b3a9afac9cbbb1bdb5b0f2bfb3b1" class="contact-item" onclick="clarity('set','contact_click','email')">
+                <i class="fas fa-envelope"></i> <span class="__cf_email__" data-cfemail="51213021302225342336383e24222111363c30383d7f323e3c">[email&#160;protected]</span>
             </a>
             <a href="https://phytai.com" target="_blank" class="contact-item" onclick="clarity('set','contact_click','portfolio')">
                 <i class="fas fa-globe"></i> phytai.com
@@ -308,7 +319,7 @@
     </div>
 
     <!-- PROJECTS -->
-    <div class="cv-section" id="section-projects">
+    <div class="cv-section scroll-fade" id="section-projects">
         <div class="sec-title lang-en">Top 6 Projects</div>
         <div class="sec-title lang-gr">Top 6 Projects</div>
         <div class="proj-grid">
@@ -352,7 +363,7 @@
     </div>
 
     <!-- SKILLS -->
-    <div class="cv-section" id="section-skills">
+    <div class="cv-section scroll-fade" id="section-skills">
         <div class="sec-title lang-en">Technical Skills</div>
         <div class="sec-title lang-gr">Τεχνικές Δεξιότητες</div>
         <table class="skills-table">
@@ -376,7 +387,7 @@
     </div>
 
     <!-- EDUCATION -->
-    <div class="cv-section" id="section-education">
+    <div class="cv-section scroll-fade" id="section-education">
         <div class="sec-title lang-en">Education & Certifications</div>
         <div class="sec-title lang-gr">Εκπαίδευση & Πιστοποιήσεις</div>
 
@@ -433,7 +444,7 @@
     </div>
 
     <!-- DOWNLOAD -->
-    <div class="download-section" id="section-download">
+    <div class="download-section scroll-fade" id="section-download">
         <a href="CV_Papastergiou_EN.pdf" download class="btn-dl-big"
            onclick="clarity('set','cv_download','bottom'); clarity('set','cv_opened', new Date().toISOString()); clarity('set','cv_source', document.referrer||'direct');">
             <i class="fas fa-file-pdf"></i>
@@ -449,7 +460,7 @@
 
 </div>
 
-<script>
+<script data-cfasync="false" src="/cdn-cgi/scripts/5c5dd728/cloudflare-static/email-decode.min.js"></script><script>
     // LANGUAGE TOGGLE
     function setLang(lang) {
         document.body.className = lang;
@@ -484,6 +495,18 @@
     ['section-header','section-summary','section-metrics','section-experience',
      'section-projects','section-skills','section-education','section-download']
     .forEach(id => { const el=document.getElementById(id); if(el) observer.observe(el); });
+
+    // SCROLL FADE IN
+    const fadeEls = document.querySelectorAll('.scroll-fade');
+    const fadeObs = new IntersectionObserver(entries => {
+        entries.forEach(e => {
+            if (e.isIntersecting) {
+                e.target.classList.add('visible');
+                fadeObs.unobserve(e.target);
+            }
+        });
+    }, { threshold: 0.08 });
+    fadeEls.forEach(el => fadeObs.observe(el));
 
     // TIME ON PAGE
     const t0 = Date.now();
