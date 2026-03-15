@@ -146,9 +146,13 @@
                onclick="clarity('set', 'btn_click', 'dashboard')">
                <i class="fas fa-chart-line"></i> Interactive Financial Analytics Dashboard</a>
 
-            <a href="CV_Papastergiou_EN.pdf" class="btn cv-download" target="_blank"
+            <a href="/cv" class="btn cv-download" style="background: #1F4E79;"
+               onclick="clarity('set', 'btn_click', 'cv_page')">
+               <i class="fas fa-id-card"></i> View Full CV</a>
+
+            <a href="CV_Papastergiou_EN.pdf" download class="btn cv-download"
                onclick="clarity('set', 'cv_opened', new Date().toISOString()); clarity('set', 'cv_source', document.referrer || 'direct');">
-               <i class="fas fa-download"></i> Download Full CV</a>
+               <i class="fas fa-download"></i> Download CV — PDF</a>
 
             <div class="cv-label"><i class="fas fa-paper-plane"></i> Contact</div>
 
