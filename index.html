@@ -85,7 +85,6 @@
         .powerbi  { background: #f2c811; color: #333; }
         .business-dash { background: linear-gradient(135deg, #6f42c1, #a020f0); grid-column: span 2; font-size: 1.05rem; }
         .cv-page  { background: #1F4E79; grid-column: span 2; }
-        .btn:hover { transform: translateY(-4px) scale(1.03); box-shadow: 0 8px 20px rgba(0,0,0,0.25); opacity: 0.95; }
 
         .cv-label { grid-column: span 2; margin-top: 15px; margin-bottom: 5px; font-weight: 600; color: var(--primary); font-size: 1rem; }
         .footer-note { font-size: 0.7rem; color: #aaa; margin-top: 25px; grid-column: span 2; }
@@ -131,9 +130,12 @@
         .lang-btn.active { background: var(--primary); color: white; }
         .lang-btn:hover:not(.active) { color: var(--primary); }
 
+        .btn:hover { transform: translateY(-3px); box-shadow: 0 8px 20px rgba(0,0,0,0.22); }
+
         @media (max-width: 600px) {
-            .grid { grid-template-columns: 1fr; }
-            .business-dash, .cv-page, .cv-label, .footer-note, hr { grid-column: auto; }
+            .grid { grid-template-columns: 1fr !important; }
+            .business-dash, .cv-page, .cv-label, .footer-note, hr { grid-column: auto !important; }
+            .fade-item { width: 100% !important; }
             .data-icon { display: none; }
             .card { padding: 25px; }
         }
