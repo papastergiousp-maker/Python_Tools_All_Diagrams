@@ -126,22 +126,39 @@
         </p>
 
         <div class="grid">
-            <a href="https://www.linkedin.com/in/spyros-papastergiou" class="btn linkedin" target="_blank" rel="noopener noreferrer"><i class="fab fa-linkedin"></i> LinkedIn</a>
-            <a href="https://public.tableau.com/app/profile/spyros.papastergiou" class="btn tableau" target="_blank" rel="noopener noreferrer"><i class="fas fa-chart-bar"></i> Tableau</a>
-            <a href="https://github.com/papastergiousp-maker/My_Projects" class="btn github" target="_blank" rel="noopener noreferrer"><i class="fab fa-github"></i> GitHub</a>
-            <a href="https://github.com/papastergiousp-maker/Power-BI" class="btn powerbi" target="_blank" rel="noopener noreferrer"><i class="fas fa-bolt"></i> Power BI</a>
-            
-            <a href="/dashboard/" class="btn business-dash"><i class="fas fa-chart-line"></i> Interactive Financial Analytics Dashboard</a>
-            
-            <a href="CV_Papastergiou_EN.pdf" class="btn cv-download" target="_blank"><i class="fas fa-download"></i> Download Full CV</a>
+            <a href="https://www.linkedin.com/in/spyros-papastergiou" class="btn linkedin" target="_blank" rel="noopener noreferrer"
+               onclick="clarity('set', 'btn_click', 'linkedin')">
+               <i class="fab fa-linkedin"></i> LinkedIn</a>
+
+            <a href="https://public.tableau.com/app/profile/spyros.papastergiou" class="btn tableau" target="_blank" rel="noopener noreferrer"
+               onclick="clarity('set', 'btn_click', 'tableau')">
+               <i class="fas fa-chart-bar"></i> Tableau</a>
+
+            <a href="https://github.com/papastergiousp-maker/My_Projects" class="btn github" target="_blank" rel="noopener noreferrer"
+               onclick="clarity('set', 'btn_click', 'github')">
+               <i class="fab fa-github"></i> GitHub</a>
+
+            <a href="https://github.com/papastergiousp-maker/Power-BI" class="btn powerbi" target="_blank" rel="noopener noreferrer"
+               onclick="clarity('set', 'btn_click', 'powerbi')">
+               <i class="fas fa-bolt"></i> Power BI</a>
+
+            <a href="/dashboard/" class="btn business-dash"
+               onclick="clarity('set', 'btn_click', 'dashboard')">
+               <i class="fas fa-chart-line"></i> Interactive Financial Analytics Dashboard</a>
+
+            <a href="CV_Papastergiou_EN.pdf" class="btn cv-download" target="_blank"
+               onclick="clarity('set', 'cv_opened', new Date().toISOString()); clarity('set', 'cv_source', document.referrer || 'direct');">
+               <i class="fas fa-download"></i> Download Full CV</a>
 
             <div class="cv-label"><i class="fas fa-paper-plane"></i> Contact</div>
-            
-            <button class="btn linkedin" onclick="handleContact('mail', 'papastergiousp@gmail.com', this, 'Email Me')">
+
+            <button class="btn linkedin"
+                    onclick="clarity('set', 'btn_click', 'email'); handleContact('mail', 'papastergiousp@gmail.com', this, 'Email Me')">
                 <i class="fas fa-envelope"></i> Email Me
             </button>
 
-            <button class="btn" style="background: #28a745;" onclick="handleContact('tel', '+306982317823', this, 'Call Me')">
+            <button class="btn" style="background: #28a745;"
+                    onclick="clarity('set', 'btn_click', 'phone'); handleContact('tel', '+306982317823', this, 'Call Me')">
                 <i class="fas fa-phone"></i> Call Me
             </button>
 
