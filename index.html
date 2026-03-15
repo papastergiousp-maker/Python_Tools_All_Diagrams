@@ -50,6 +50,10 @@
             position: relative;
             overflow-x: hidden;
         }
+
+        /* LANGUAGE SECTIONS */
+        body.greek .lang-en { display: none !important; }
+        body.english .lang-gr { display: none !important; }
         
         .data-icon { position: absolute; color: #d1d9e6; opacity: 0.12; font-size: 5rem; z-index: 0; pointer-events: none; }
         .icon-1 { top: 10%; left: 5%; transform: rotate(-15deg); font-size: 6rem; }
@@ -76,44 +80,48 @@
         .btn { display: flex; align-items: center; justify-content: center; gap: 8px; padding: 14px; text-decoration: none; color: white; border-radius: 10px; font-weight: 600; transition: all 0.3s ease; font-size: 0.95rem; cursor: pointer; border: none; }
         
         .linkedin { background: #0077b5; }
-        .tableau { background: #e97627; }
-        .github { background: #24292e; }
-        .powerbi { background: #f2c811; color: #333; }
+        .tableau  { background: #e97627; }
+        .github   { background: #24292e; }
+        .powerbi  { background: #f2c811; color: #333; }
         .business-dash { background: linear-gradient(135deg, #6f42c1, #a020f0); grid-column: span 2; font-size: 1.05rem; }
-        .cv-page { background: #1F4E79; grid-column: span 2; }
-
+        .cv-page  { background: #1F4E79; grid-column: span 2; }
         .btn:hover { transform: translateY(-3px); box-shadow: 0 5px 15px rgba(0,0,0,0.2); opacity: 0.9; }
+
         .cv-label { grid-column: span 2; margin-top: 15px; margin-bottom: 5px; font-weight: 600; color: var(--primary); font-size: 1rem; }
         .footer-note { font-size: 0.7rem; color: #aaa; margin-top: 25px; grid-column: span 2; }
-        
         hr { border: 0; border-top: 1px solid #eee; margin: 30px 0; grid-column: span 2; width: 100%; }
 
+        /* OPEN TO WORK BADGE */
         .open-badge {
-            display: inline-flex;
-            align-items: center;
-            gap: 6px;
-            background: #e8f5e9;
-            color: #2e7d32;
-            padding: 4px 12px;
-            border-radius: 15px;
-            font-size: 0.75rem;
-            font-weight: 700;
-            margin-bottom: 10px;
-            text-decoration: none;
-            transition: all 0.2s;
-            cursor: pointer;
+            display: inline-flex; align-items: center; gap: 6px;
+            background: #e8f5e9; color: #2e7d32;
+            padding: 4px 12px; border-radius: 15px;
+            font-size: 0.75rem; font-weight: 700;
+            margin-bottom: 10px; text-decoration: none;
+            transition: all 0.2s; cursor: pointer;
         }
         .open-badge:hover { background: #c8e6c9; transform: translateY(-1px); }
-        .open-badge .dot {
-            width: 7px; height: 7px;
-            background: #2e7d32;
-            border-radius: 50%;
-            animation: pulse 1.5s infinite;
+        .open-badge .dot { width: 7px; height: 7px; background: #2e7d32; border-radius: 50%; animation: pulse 1.5s infinite; }
+        @keyframes pulse { 0%,100%{opacity:1} 50%{opacity:0.3} }
+
+        /* LANGUAGE TOGGLE */
+        .lang-toggle-wrap {
+            display: flex; justify-content: flex-end;
+            margin-bottom: 8px;
         }
-        @keyframes pulse {
-            0%, 100% { opacity: 1; }
-            50% { opacity: 0.3; }
+        .lang-toggle {
+            display: flex; align-items: center;
+            background: #eef2f7; border-radius: 8px;
+            overflow: hidden; border: 1px solid #d1d9e6;
         }
+        .lang-btn {
+            padding: 5px 12px; font-size: 0.78rem; font-weight: 600;
+            cursor: pointer; border: none; background: transparent;
+            color: #888; transition: all 0.2s; display: flex;
+            align-items: center; gap: 4px;
+        }
+        .lang-btn.active { background: var(--primary); color: white; }
+        .lang-btn:hover:not(.active) { color: var(--primary); }
 
         @media (max-width: 600px) {
             .grid { grid-template-columns: 1fr; }
@@ -123,7 +131,7 @@
         }
     </style>
 </head>
-<body>
+<body class="english">
     <i class="fas fa-chart-line data-icon icon-1"></i>
     <i class="fas fa-chart-bar data-icon icon-2"></i>
     <i class="fas fa-chart-pie data-icon icon-3"></i>
@@ -133,69 +141,102 @@
 
     <div class="card">
 
-        <!-- OPEN TO WORK badge — clickable → cv page -->
-        <a href="/cv" class="open-badge" onclick="clarity('set', 'btn_click', 'open_to_work_badge')">
-            <span class="dot"></span> OPEN TO WORK
+        <!-- LANGUAGE TOGGLE -->
+        <div class="lang-toggle-wrap">
+            <div class="lang-toggle">
+                <button class="lang-btn active" id="btn-en" onclick="setLang('english')">🇬🇧 EN</button>
+                <button class="lang-btn" id="btn-gr" onclick="setLang('greek')">🇬🇷 GR</button>
+            </div>
+        </div>
+
+        <!-- OPEN TO WORK -->
+        <a href="/cv" class="open-badge" onclick="clarity('set','btn_click','open_to_work_badge')">
+            <span class="dot"></span>
+            <span class="lang-en">OPEN TO WORK</span>
+            <span class="lang-gr">ΑΝΑΖΗΤΩ ΕΡΓΑΣΙΑ</span>
         </a>
 
         <h1>Spyros Papastergiou</h1>
-        <h2>Economist & Financial Data Analyst</h2>
+
+        <h2 class="lang-en">Economist & Financial Data Analyst | Business Analyst</h2>
+        <h2 class="lang-gr">Οικονομολόγος & Financial Data Analyst | Business Analyst</h2>
         
-        <p class="description">
+        <p class="description lang-en">
             Specialized in Financial Analysis and FinTech. 
             Transforming complex data into strategic insights through Predictive Modeling and Risk Analysis.
+        </p>
+        <p class="description lang-gr">
+            Εξειδίκευση σε Financial Analysis και FinTech.
+            Μετατρέπω σύνθετα δεδομένα σε στρατηγικές αποφάσεις μέσω Predictive Modeling και Risk Analysis.
         </p>
 
         <div class="grid">
             <a href="https://www.linkedin.com/in/spyros-papastergiou" class="btn linkedin" target="_blank" rel="noopener noreferrer"
-               onclick="clarity('set', 'btn_click', 'linkedin')">
+               onclick="clarity('set','btn_click','linkedin')">
                <i class="fab fa-linkedin"></i> LinkedIn</a>
 
             <a href="https://public.tableau.com/app/profile/spyros.papastergiou" class="btn tableau" target="_blank" rel="noopener noreferrer"
-               onclick="clarity('set', 'btn_click', 'tableau')">
+               onclick="clarity('set','btn_click','tableau')">
                <i class="fas fa-chart-bar"></i> Tableau</a>
 
             <a href="https://github.com/papastergiousp-maker/My_Projects" class="btn github" target="_blank" rel="noopener noreferrer"
-               onclick="clarity('set', 'btn_click', 'github')">
+               onclick="clarity('set','btn_click','github')">
                <i class="fab fa-github"></i> GitHub</a>
 
             <a href="https://github.com/papastergiousp-maker/Power-BI" class="btn powerbi" target="_blank" rel="noopener noreferrer"
-               onclick="clarity('set', 'btn_click', 'powerbi')">
+               onclick="clarity('set','btn_click','powerbi')">
                <i class="fas fa-bolt"></i> Power BI</a>
 
             <a href="/dashboard/" class="btn business-dash"
-               onclick="clarity('set', 'btn_click', 'dashboard')">
-               <i class="fas fa-chart-line"></i> Interactive Financial Analytics Dashboard</a>
+               onclick="clarity('set','btn_click','dashboard')">
+               <i class="fas fa-chart-line"></i>
+               <span class="lang-en">Interactive Financial Analytics Dashboard</span>
+               <span class="lang-gr">Διαδραστικό Dashboard Χρηματοοικονομικής Ανάλυσης</span>
+            </a>
 
-            <!-- View Full CV — πηγαίνει στο cv.html για tracking -->
             <a href="/cv" class="btn cv-page"
-               onclick="clarity('set', 'btn_click', 'cv_page')">
-               <i class="fas fa-id-card"></i> View Full CV</a>
+               onclick="clarity('set','btn_click','cv_page')">
+               <i class="fas fa-id-card"></i>
+               <span class="lang-en">View Full CV</span>
+               <span class="lang-gr">Προβολή Βιογραφικού</span>
+            </a>
 
-            <div class="cv-label"><i class="fas fa-paper-plane"></i> Contact</div>
+            <div class="cv-label">
+                <i class="fas fa-paper-plane"></i>
+                <span class="lang-en"> Contact</span>
+                <span class="lang-gr"> Επικοινωνία</span>
+            </div>
 
             <button class="btn linkedin"
-                    onclick="clarity('set', 'btn_click', 'email'); handleContact('mail', 'papastergiousp@gmail.com', this, 'Email Me')">
-                <i class="fas fa-envelope"></i> Email Me
+                    onclick="clarity('set','btn_click','email'); handleContact('mail','papastergiousp@gmail.com',this, currentLang==='greek' ? 'Email' : 'Email Me')">
+                <i class="fas fa-envelope"></i>
+                <span class="lang-en">Email Me</span>
+                <span class="lang-gr">Email</span>
             </button>
 
-            <button class="btn" style="background: #28a745;"
-                    onclick="clarity('set', 'btn_click', 'phone'); handleContact('tel', '+306982317823', this, 'Call Me')">
-                <i class="fas fa-phone"></i> Call Me
+            <button class="btn" style="background:#28a745;"
+                    onclick="clarity('set','btn_click','phone'); handleContact('tel','+306982317823',this, currentLang==='greek' ? 'Κλήση' : 'Call Me')">
+                <i class="fas fa-phone"></i>
+                <span class="lang-en">Call Me</span>
+                <span class="lang-gr">Κλήση</span>
             </button>
 
             <hr>
         </div>
 
-        <div class="section-title">Technical Stack</div>
+        <!-- TECHNICAL STACK -->
+        <div class="section-title lang-en">Technical Stack</div>
+        <div class="section-title lang-gr">Τεχνικές Δεξιότητες</div>
         <div class="skills-container">
-            <span class="skill-tag">SQL (MySQL)</span>
+            <span class="skill-tag">SQL</span>
             <span class="skill-tag">Python for Finance</span>
             <span class="skill-tag">Tableau / Power BI</span>
             <span class="skill-tag">Advanced Excel</span>
         </div>
 
-        <div class="section-title">Strategy & Risk</div>
+        <!-- STRATEGY & RISK -->
+        <div class="section-title lang-en">Strategy & Risk</div>
+        <div class="section-title lang-gr">Στρατηγική & Ανάλυση Κινδύνου</div>
         <div class="skills-container">
             <span class="skill-tag fintech-tag">Financial Modeling</span>
             <span class="skill-tag fintech-tag">Predictive Analytics</span>
@@ -203,13 +244,33 @@
             <span class="skill-tag fintech-tag">Forecasting</span>
         </div>
 
-        <div class="section-title">Certifications</div>
+        <!-- CERTIFICATIONS -->
+        <div class="section-title lang-en">Certifications</div>
+        <div class="section-title lang-gr">Πιστοποιήσεις</div>
         <div class="skills-container">
             <span class="skill-tag cert-tag">Financial Data Analytics (Workearly)</span>
             <span class="skill-tag cert-tag">IMBA Economics - University of Patras</span>
         </div>
 
-        <div class="footer-note">This site uses basic analytics to optimize user experience. | © 2026 phytai.com</div>
+        <div class="footer-note">
+            This site uses basic analytics to optimize user experience. | © 2026 phytai.com
+        </div>
     </div>
+
+    <script>
+        let currentLang = 'english';
+
+        function setLang(lang) {
+            currentLang = lang;
+            document.body.className = lang;
+            document.getElementById('btn-en').className = 'lang-btn' + (lang==='english' ? ' active' : '');
+            document.getElementById('btn-gr').className  = 'lang-btn' + (lang==='greek'   ? ' active' : '');
+            localStorage.setItem('site_lang', lang);
+            clarity('set', 'language', lang);
+        }
+
+        const saved = localStorage.getItem('site_lang');
+        if (saved) setLang(saved);
+    </script>
 </body>
 </html>
