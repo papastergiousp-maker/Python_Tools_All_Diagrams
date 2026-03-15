@@ -13,11 +13,9 @@
             y=l.getElementsByTagName(r)[0];y.parentNode.insertBefore(t,y);
         })(window, document, "clarity", "script", "vr1rwybrwi");
 
-        // Smart Contact Handling (Mobile vs Desktop)
         function handleContact(type, value, element, originalText) {
             const isMobile = /iPhone|iPad|iPod|Android/i.test(navigator.userAgent);
             const icon = element.querySelector('i').outerHTML;
-            
             if (isMobile) {
                 if (type === 'tel') window.location.href = "tel:" + value;
                 if (type === 'mail') window.location.href = "mailto:" + value;
@@ -26,18 +24,12 @@
                     navigator.clipboard.writeText(value);
                     element.innerHTML = icon + ' Copied!';
                     element.style.background = "#28a745";
-                    setTimeout(() => {
-                        element.innerHTML = icon + ' ' + originalText;
-                        element.style.background = "";
-                    }, 2000);
+                    setTimeout(() => { element.innerHTML = icon + ' ' + originalText; element.style.background = ""; }, 2000);
                 }
                 if (type === 'tel') {
                     element.innerHTML = icon + ' ' + value;
                     element.style.background = "#0056b3";
-                    setTimeout(() => {
-                        element.innerHTML = icon + ' ' + originalText;
-                        element.style.background = "";
-                    }, 5000);
+                    setTimeout(() => { element.innerHTML = icon + ' ' + originalText; element.style.background = ""; }, 5000);
                 }
             }
         }
@@ -88,17 +80,44 @@
         .github { background: #24292e; }
         .powerbi { background: #f2c811; color: #333; }
         .business-dash { background: linear-gradient(135deg, #6f42c1, #a020f0); grid-column: span 2; font-size: 1.05rem; }
-        .cv-download { background: #dc3545; grid-column: span 2; }
-        
+        .cv-page { background: #1F4E79; grid-column: span 2; }
+
         .btn:hover { transform: translateY(-3px); box-shadow: 0 5px 15px rgba(0,0,0,0.2); opacity: 0.9; }
         .cv-label { grid-column: span 2; margin-top: 15px; margin-bottom: 5px; font-weight: 600; color: var(--primary); font-size: 1rem; }
         .footer-note { font-size: 0.7rem; color: #aaa; margin-top: 25px; grid-column: span 2; }
         
         hr { border: 0; border-top: 1px solid #eee; margin: 30px 0; grid-column: span 2; width: 100%; }
 
+        .open-badge {
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+            background: #e8f5e9;
+            color: #2e7d32;
+            padding: 4px 12px;
+            border-radius: 15px;
+            font-size: 0.75rem;
+            font-weight: 700;
+            margin-bottom: 10px;
+            text-decoration: none;
+            transition: all 0.2s;
+            cursor: pointer;
+        }
+        .open-badge:hover { background: #c8e6c9; transform: translateY(-1px); }
+        .open-badge .dot {
+            width: 7px; height: 7px;
+            background: #2e7d32;
+            border-radius: 50%;
+            animation: pulse 1.5s infinite;
+        }
+        @keyframes pulse {
+            0%, 100% { opacity: 1; }
+            50% { opacity: 0.3; }
+        }
+
         @media (max-width: 600px) {
             .grid { grid-template-columns: 1fr; }
-            .business-dash, .cv-label, .cv-download, .footer-note, hr { grid-column: auto; }
+            .business-dash, .cv-page, .cv-label, .footer-note, hr { grid-column: auto; }
             .data-icon { display: none; }
             .card { padding: 25px; }
         }
@@ -113,9 +132,11 @@
     <i class="fas fa-database data-icon icon-6"></i>
 
     <div class="card">
-        <div style="display: inline-block; background: #e8f5e9; color: #2e7d32; padding: 4px 12px; border-radius: 15px; font-size: 0.75rem; font-weight: 700; margin-bottom: 10px;">
-            <i class="fas fa-circle" style="font-size: 0.6rem; vertical-align: middle;"></i> OPEN TO WORK
-        </div>
+
+        <!-- OPEN TO WORK badge — clickable → cv page -->
+        <a href="/cv" class="open-badge" onclick="clarity('set', 'btn_click', 'open_to_work_badge')">
+            <span class="dot"></span> OPEN TO WORK
+        </a>
 
         <h1>Spyros Papastergiou</h1>
         <h2>Economist & Financial Data Analyst</h2>
@@ -146,13 +167,10 @@
                onclick="clarity('set', 'btn_click', 'dashboard')">
                <i class="fas fa-chart-line"></i> Interactive Financial Analytics Dashboard</a>
 
-            <a href="/cv" class="btn cv-download" style="background: #1F4E79;"
+            <!-- View Full CV — πηγαίνει στο cv.html για tracking -->
+            <a href="/cv" class="btn cv-page"
                onclick="clarity('set', 'btn_click', 'cv_page')">
                <i class="fas fa-id-card"></i> View Full CV</a>
-
-            <a href="CV_Papastergiou_EN.pdf" download class="btn cv-download"
-               onclick="clarity('set', 'cv_opened', new Date().toISOString()); clarity('set', 'cv_source', document.referrer || 'direct');">
-               <i class="fas fa-download"></i> Download CV — PDF</a>
 
             <div class="cv-label"><i class="fas fa-paper-plane"></i> Contact</div>
 
@@ -191,7 +209,7 @@
             <span class="skill-tag cert-tag">IMBA Economics - University of Patras</span>
         </div>
 
-        <div class="footer-note" style="grid-column: span 2; margin-top: 25px;">This site uses basic analytics to optimize user experience. | © 2026 phytai.com</div>
+        <div class="footer-note">This site uses basic analytics to optimize user experience. | © 2026 phytai.com</div>
     </div>
 </body>
 </html>

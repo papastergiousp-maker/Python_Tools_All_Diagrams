@@ -5,7 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Spyros Papastergiou — CV</title>
     <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@300;400;500;600&family=DM+Serif+Display&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Playfair+Display:wght@700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
 
     <!-- Microsoft Clarity -->
@@ -19,133 +19,147 @@
 
     <style>
         :root {
-            --navy: #0a1628;
-            --blue: #1a3a5c;
-            --accent: #2e7dd1;
-            --gold: #c9a84c;
-            --light: #f0f4f8;
-            --text: #1e2d3d;
-            --muted: #6b7f94;
-            --border: #dce4ed;
-            --white: #ffffff;
+            --navy:   #0d1f35;
+            --blue:   #1a3a5c;
+            --accent: #2563eb;
+            --gold:   #f59e0b;
+            --light:  #f8fafc;
+            --white:  #ffffff;
+            --text:   #1e293b;
+            --muted:  #64748b;
+            --border: #e2e8f0;
         }
 
         * { margin: 0; padding: 0; box-sizing: border-box; }
 
         body {
-            font-family: 'DM Sans', sans-serif;
+            font-family: 'Inter', sans-serif;
             background: var(--light);
             color: var(--text);
             line-height: 1.6;
         }
 
-        /* ── STICKY DOWNLOAD BAR ── */
+        /* ── FADE IN ANIMATION ── */
+        @keyframes fadeUp {
+            from { opacity: 0; transform: translateY(18px); }
+            to   { opacity: 1; transform: translateY(0); }
+        }
+        .fade-up { animation: fadeUp 0.5s ease both; }
+        .delay-1 { animation-delay: 0.1s; }
+        .delay-2 { animation-delay: 0.2s; }
+        .delay-3 { animation-delay: 0.3s; }
+        .delay-4 { animation-delay: 0.4s; }
+
+        /* ── PROGRESS BAR ── */
+        .progress-bar {
+            position: fixed;
+            top: 52px; left: 0;
+            height: 2px;
+            background: var(--gold);
+            width: 0%;
+            z-index: 999;
+            transition: width 0.1s;
+        }
+
+        /* ── STICKY BAR ── */
         .sticky-bar {
             position: fixed;
             top: 0; left: 0; right: 0;
             background: var(--navy);
-            padding: 10px 30px;
+            padding: 10px 32px;
             display: flex;
             align-items: center;
             justify-content: space-between;
             z-index: 1000;
-            box-shadow: 0 2px 20px rgba(0,0,0,0.3);
+            box-shadow: 0 1px 20px rgba(0,0,0,0.25);
         }
-        .sticky-bar .name {
-            color: white;
-            font-size: 0.9rem;
-            font-weight: 500;
-            letter-spacing: 0.5px;
-        }
-        .sticky-bar .name span { color: var(--gold); }
-
-        .btn-download {
-            background: var(--gold);
-            color: var(--navy);
-            padding: 8px 20px;
-            border-radius: 6px;
-            font-weight: 700;
-            font-size: 0.85rem;
+        .back-btn {
+            color: rgba(255,255,255,0.6);
+            font-size: 0.82rem;
             text-decoration: none;
             display: flex;
             align-items: center;
-            gap: 8px;
+            gap: 6px;
+            transition: color 0.2s;
+        }
+        .back-btn:hover { color: var(--gold); }
+        .sticky-name {
+            color: white;
+            font-size: 0.88rem;
+            font-weight: 500;
+        }
+        .sticky-name span { color: var(--gold); }
+        .btn-dl-sticky {
+            background: var(--gold);
+            color: var(--navy);
+            padding: 7px 18px;
+            border-radius: 6px;
+            font-weight: 700;
+            font-size: 0.8rem;
+            text-decoration: none;
+            display: flex;
+            align-items: center;
+            gap: 7px;
             transition: all 0.2s;
-            letter-spacing: 0.3px;
         }
-        .btn-download:hover {
-            background: #e0bc6a;
-            transform: translateY(-1px);
-            box-shadow: 0 4px 12px rgba(201,168,76,0.4);
-        }
+        .btn-dl-sticky:hover { background: #fbbf24; box-shadow: 0 4px 12px rgba(245,158,11,0.35); }
 
-        /* ── MAIN WRAPPER ── */
-        .cv-wrapper {
-            max-width: 860px;
+        /* ── WRAPPER ── */
+        .cv-wrap {
+            max-width: 820px;
             margin: 0 auto;
-            padding: 90px 20px 60px;
+            padding: 76px 20px 60px;
         }
 
         /* ── HEADER ── */
         .cv-header {
             background: var(--navy);
-            border-radius: 16px;
-            padding: 48px 52px;
-            margin-bottom: 24px;
+            border-radius: 14px;
+            padding: 44px 48px;
+            margin-bottom: 16px;
             position: relative;
             overflow: hidden;
         }
         .cv-header::before {
             content: '';
             position: absolute;
-            top: -60px; right: -60px;
-            width: 280px; height: 280px;
-            background: radial-gradient(circle, rgba(46,125,209,0.15) 0%, transparent 70%);
+            top: -40px; right: -40px;
+            width: 220px; height: 220px;
+            background: radial-gradient(circle, rgba(37,99,235,0.2) 0%, transparent 70%);
             border-radius: 50%;
+            pointer-events: none;
         }
-        .cv-header::after {
-            content: '';
-            position: absolute;
-            bottom: -40px; left: 30%;
-            width: 200px; height: 200px;
-            background: radial-gradient(circle, rgba(201,168,76,0.08) 0%, transparent 70%);
-            border-radius: 50%;
-        }
-
         .header-top {
             display: flex;
             justify-content: space-between;
             align-items: flex-start;
             flex-wrap: wrap;
-            gap: 20px;
+            gap: 16px;
             position: relative;
-            z-index: 1;
         }
-
         .header-name h1 {
-            font-family: 'DM Serif Display', serif;
-            font-size: 2.8rem;
+            font-family: 'Playfair Display', serif;
+            font-size: 2.6rem;
             color: white;
-            line-height: 1.1;
-            margin-bottom: 8px;
+            line-height: 1.15;
+            margin-bottom: 6px;
         }
-        .header-name .title {
+        .header-title {
             color: var(--gold);
-            font-size: 0.95rem;
+            font-size: 0.82rem;
             font-weight: 500;
-            letter-spacing: 1px;
+            letter-spacing: 1.5px;
             text-transform: uppercase;
         }
-
         .open-badge {
-            background: rgba(40,167,69,0.2);
-            border: 1px solid rgba(40,167,69,0.4);
-            color: #5dd879;
-            padding: 6px 14px;
+            background: rgba(34,197,94,0.15);
+            border: 1px solid rgba(34,197,94,0.3);
+            color: #4ade80;
+            padding: 5px 14px;
             border-radius: 20px;
-            font-size: 0.75rem;
+            font-size: 0.72rem;
             font-weight: 700;
-            letter-spacing: 0.5px;
+            letter-spacing: 0.8px;
             display: flex;
             align-items: center;
             gap: 6px;
@@ -153,92 +167,80 @@
         }
         .open-badge::before {
             content: '';
-            width: 7px; height: 7px;
-            background: #5dd879;
+            width: 6px; height: 6px;
+            background: #4ade80;
             border-radius: 50%;
-            animation: pulse 1.5s infinite;
+            animation: blink 1.5s infinite;
         }
-        @keyframes pulse {
-            0%, 100% { opacity: 1; }
-            50% { opacity: 0.3; }
-        }
+        @keyframes blink { 0%,100%{opacity:1} 50%{opacity:0.2} }
 
         .contact-row {
             display: flex;
             flex-wrap: wrap;
-            gap: 16px;
-            margin-top: 24px;
+            gap: 14px;
+            margin-top: 22px;
             position: relative;
-            z-index: 1;
         }
         .contact-item {
-            color: rgba(255,255,255,0.75);
-            font-size: 0.85rem;
+            color: rgba(255,255,255,0.65);
+            font-size: 0.82rem;
             display: flex;
             align-items: center;
-            gap: 7px;
+            gap: 6px;
             text-decoration: none;
             transition: color 0.2s;
         }
         .contact-item:hover { color: var(--gold); }
-        .contact-item i { color: var(--accent); font-size: 0.8rem; }
+        .contact-item i { color: var(--accent); font-size: 0.75rem; }
 
-        /* ── SUMMARY BOX ── */
-        .summary-box {
+        /* ── SUMMARY ── */
+        .summary-card {
             background: white;
             border-radius: 12px;
-            padding: 28px 36px;
-            margin-bottom: 20px;
-            border-left: 4px solid var(--gold);
-            box-shadow: 0 2px 12px rgba(0,0,0,0.06);
+            padding: 26px 32px;
+            margin-bottom: 16px;
+            border-left: 3px solid var(--gold);
+            box-shadow: 0 1px 8px rgba(0,0,0,0.05);
         }
-        .summary-box p {
-            color: var(--text);
-            font-size: 0.95rem;
-            line-height: 1.75;
-        }
+        .summary-card p { font-size: 0.92rem; color: #334155; line-height: 1.8; }
+        .summary-card p strong { color: var(--navy); }
 
-        /* ── METRICS ROW ── */
+        /* ── METRICS ── */
         .metrics-row {
             display: grid;
             grid-template-columns: repeat(3, 1fr);
-            gap: 16px;
-            margin-bottom: 20px;
+            gap: 12px;
+            margin-bottom: 16px;
         }
-        .metric-card {
+        .metric {
             background: white;
             border-radius: 12px;
-            padding: 20px;
+            padding: 20px 16px;
             text-align: center;
-            box-shadow: 0 2px 12px rgba(0,0,0,0.06);
-            border-top: 3px solid var(--accent);
+            box-shadow: 0 1px 8px rgba(0,0,0,0.05);
+            border-top: 2px solid var(--accent);
+            transition: transform 0.2s;
         }
-        .metric-card .number {
-            font-family: 'DM Serif Display', serif;
-            font-size: 2rem;
+        .metric:hover { transform: translateY(-2px); }
+        .metric .num {
+            font-family: 'Playfair Display', serif;
+            font-size: 1.9rem;
             color: var(--navy);
             line-height: 1;
         }
-        .metric-card .number span { color: var(--gold); }
-        .metric-card .label {
-            font-size: 0.75rem;
-            color: var(--muted);
-            margin-top: 4px;
-            text-transform: uppercase;
-            letter-spacing: 0.5px;
-        }
+        .metric .num span { color: var(--gold); }
+        .metric .lbl { font-size: 0.7rem; color: var(--muted); margin-top: 4px; text-transform: uppercase; letter-spacing: 0.5px; }
 
-        /* ── SECTIONS ── */
+        /* ── SECTION CARD ── */
         .cv-section {
             background: white;
             border-radius: 12px;
-            padding: 32px 36px;
-            margin-bottom: 20px;
-            box-shadow: 0 2px 12px rgba(0,0,0,0.06);
+            padding: 28px 32px;
+            margin-bottom: 16px;
+            box-shadow: 0 1px 8px rgba(0,0,0,0.05);
         }
-
-        .section-title {
-            font-size: 0.7rem;
+        .sec-title {
+            font-size: 0.65rem;
             font-weight: 700;
             text-transform: uppercase;
             letter-spacing: 2px;
@@ -248,143 +250,67 @@
             align-items: center;
             gap: 10px;
         }
-        .section-title::after {
-            content: '';
-            flex: 1;
-            height: 1px;
-            background: var(--border);
-        }
+        .sec-title::after { content: ''; flex: 1; height: 1px; background: var(--border); }
 
-        /* Experience */
-        .exp-item { margin-bottom: 28px; }
-        .exp-item:last-child { margin-bottom: 0; }
-
-        .exp-header {
-            display: flex;
-            justify-content: space-between;
-            align-items: flex-start;
-            flex-wrap: wrap;
-            gap: 8px;
-            margin-bottom: 4px;
-        }
-        .exp-title {
-            font-weight: 600;
-            font-size: 1rem;
-            color: var(--navy);
-        }
-        .exp-date {
-            font-size: 0.8rem;
-            color: var(--muted);
-            background: var(--light);
-            padding: 3px 10px;
-            border-radius: 20px;
-            white-space: nowrap;
-        }
-        .exp-company {
-            font-size: 0.85rem;
-            color: var(--accent);
-            font-weight: 500;
-            margin-bottom: 10px;
-        }
-        .exp-bullets { list-style: none; }
-        .exp-bullets li {
-            font-size: 0.88rem;
-            color: #3a4d5e;
-            padding: 4px 0 4px 18px;
+        /* ── EXPERIENCE ── */
+        .exp-item { padding-bottom: 24px; margin-bottom: 24px; border-bottom: 1px solid var(--border); }
+        .exp-item:last-child { padding-bottom: 0; margin-bottom: 0; border-bottom: none; }
+        .exp-row { display: flex; justify-content: space-between; align-items: flex-start; flex-wrap: wrap; gap: 6px; margin-bottom: 3px; }
+        .exp-title { font-weight: 600; font-size: 0.97rem; color: var(--navy); }
+        .exp-date { font-size: 0.75rem; color: var(--muted); background: var(--light); padding: 3px 10px; border-radius: 20px; white-space: nowrap; }
+        .exp-company { font-size: 0.82rem; color: var(--accent); font-weight: 500; margin-bottom: 10px; }
+        .exp-list { list-style: none; }
+        .exp-list li {
+            font-size: 0.86rem;
+            color: #475569;
+            padding: 3px 0 3px 16px;
             position: relative;
-            line-height: 1.6;
+            line-height: 1.65;
         }
-        .exp-bullets li::before {
-            content: '▸';
-            position: absolute;
-            left: 0;
-            color: var(--gold);
-            font-size: 0.75rem;
-        }
-        .exp-bullets li strong { color: var(--navy); }
-
-        .skills-tags {
-            display: flex;
-            flex-wrap: wrap;
-            gap: 6px;
-            margin-top: 10px;
-        }
-        .skill-tag {
+        .exp-list li::before { content: '›'; position: absolute; left: 0; color: var(--gold); font-size: 1rem; line-height: 1.4; }
+        .exp-list li strong { color: var(--navy); font-weight: 600; }
+        .tags { display: flex; flex-wrap: wrap; gap: 5px; margin-top: 10px; }
+        .tag {
             background: var(--light);
             color: var(--blue);
-            font-size: 0.75rem;
-            padding: 4px 10px;
+            font-size: 0.72rem;
+            padding: 3px 10px;
             border-radius: 20px;
             font-weight: 500;
             border: 1px solid var(--border);
         }
 
-        /* Projects */
-        .projects-grid {
-            display: grid;
-            grid-template-columns: 1fr 1fr;
-            gap: 14px;
-        }
-        .project-card {
+        /* ── PROJECTS GRID ── */
+        .proj-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; }
+        .proj-card {
             background: var(--light);
             border-radius: 10px;
             padding: 16px 18px;
             border: 1px solid var(--border);
-            transition: all 0.2s;
             text-decoration: none;
             display: block;
-            cursor: pointer;
+            transition: all 0.2s;
         }
-        .project-card:hover {
+        .proj-card:hover {
             border-color: var(--accent);
-            box-shadow: 0 4px 12px rgba(46,125,209,0.15);
+            box-shadow: 0 4px 14px rgba(37,99,235,0.1);
             transform: translateY(-2px);
         }
-        .project-card:hover .project-name {
-            color: var(--accent);
-        }
-        .project-tool {
-            font-size: 0.7rem;
-            color: var(--accent);
-            font-weight: 700;
-            text-transform: uppercase;
-            letter-spacing: 0.5px;
-            margin-bottom: 4px;
-        }
-        .project-name {
-            font-size: 0.88rem;
-            font-weight: 600;
-            color: var(--navy);
-            margin-bottom: 4px;
-        }
-        .project-desc {
-            font-size: 0.78rem;
-            color: var(--muted);
-            line-height: 1.5;
-        }
+        .proj-tool { font-size: 0.68rem; color: var(--accent); font-weight: 700; text-transform: uppercase; letter-spacing: 0.5px; margin-bottom: 4px; }
+        .proj-name { font-size: 0.88rem; font-weight: 600; color: var(--navy); margin-bottom: 3px; transition: color 0.2s; }
+        .proj-card:hover .proj-name { color: var(--accent); }
+        .proj-desc { font-size: 0.76rem; color: var(--muted); line-height: 1.5; }
 
-        /* Skills grid */
-        .skills-grid {
-            display: grid;
-            grid-template-columns: 1fr 1fr;
-            gap: 16px;
-        }
-        .skill-group-title {
-            font-size: 0.75rem;
-            font-weight: 700;
-            color: var(--navy);
-            margin-bottom: 8px;
-            text-transform: uppercase;
-            letter-spacing: 0.5px;
-        }
-        .skill-list {
-            font-size: 0.85rem;
-            color: var(--muted);
-            line-height: 1.8;
-        }
+        /* ── SKILLS TABLE ── */
+        .skills-table { width: 100%; border-collapse: collapse; font-size: 0.86rem; }
+        .skills-table tr { border-bottom: 1px solid var(--border); }
+        .skills-table tr:last-child { border-bottom: none; }
+        .skills-table td { padding: 10px 8px; vertical-align: top; }
+        .skills-table td:first-child { color: var(--navy); font-weight: 600; width: 38%; white-space: nowrap; }
+        .skills-table td:last-child { color: #475569; }
 
-        /* Education & Certs */
-        .edu-item {
+        /* ── EDUCATION ── */
+        .edu-row {
             display: flex;
             justify-content: space-between;
             align-items: flex-start;
@@ -393,331 +319,278 @@
             padding: 14px 0;
             border-bottom: 1px solid var(--border);
         }
-        .edu-item:last-child { border-bottom: none; padding-bottom: 0; }
-        .edu-title { font-weight: 600; color: var(--navy); font-size: 0.92rem; }
-        .edu-sub { font-size: 0.82rem; color: var(--muted); margin-top: 2px; }
-        .edu-year {
-            font-size: 0.8rem;
-            color: var(--accent);
-            font-weight: 600;
-            white-space: nowrap;
-        }
+        .edu-row:first-child { padding-top: 0; }
+        .edu-row:last-child { border-bottom: none; padding-bottom: 0; }
+        .edu-title { font-weight: 600; color: var(--navy); font-size: 0.9rem; }
+        .edu-sub { font-size: 0.8rem; color: var(--muted); margin-top: 2px; }
+        .edu-year { font-size: 0.78rem; color: var(--accent); font-weight: 600; white-space: nowrap; }
 
-        /* Languages */
-        .lang-row {
-            display: flex;
-            gap: 20px;
-            flex-wrap: wrap;
-        }
-        .lang-item {
-            display: flex;
-            align-items: center;
-            gap: 10px;
-            font-size: 0.88rem;
-        }
+        /* ── LANGUAGES ── */
+        .lang-row { display: flex; gap: 16px; flex-wrap: wrap; }
+        .lang-item { display: flex; align-items: center; gap: 8px; font-size: 0.86rem; }
         .lang-name { font-weight: 600; color: var(--navy); }
-        .lang-level {
-            background: var(--light);
-            color: var(--accent);
-            font-size: 0.75rem;
-            padding: 3px 10px;
-            border-radius: 20px;
-            font-weight: 600;
-            border: 1px solid var(--border);
-        }
+        .lang-lvl { background: var(--light); color: var(--accent); font-size: 0.72rem; padding: 3px 10px; border-radius: 20px; font-weight: 600; border: 1px solid var(--border); }
 
-        /* Download section */
+        /* ── DOWNLOAD SECTION ── */
         .download-section {
             background: var(--navy);
-            border-radius: 12px;
-            padding: 32px;
+            border-radius: 14px;
+            padding: 36px 32px;
             text-align: center;
             margin-bottom: 20px;
         }
         .download-section h3 {
-            font-family: 'DM Serif Display', serif;
+            font-family: 'Playfair Display', serif;
             color: white;
-            font-size: 1.4rem;
-            margin-bottom: 8px;
+            font-size: 1.5rem;
+            margin-bottom: 6px;
         }
         .download-section p {
-            color: rgba(255,255,255,0.6);
-            font-size: 0.88rem;
-            margin-bottom: 20px;
+            color: rgba(255,255,255,0.5);
+            font-size: 0.84rem;
+            margin-bottom: 22px;
         }
-        .btn-download-big {
+        .btn-dl-big {
             background: var(--gold);
             color: var(--navy);
-            padding: 14px 36px;
+            padding: 14px 38px;
             border-radius: 8px;
             font-weight: 700;
-            font-size: 1rem;
+            font-size: 0.97rem;
             text-decoration: none;
             display: inline-flex;
             align-items: center;
             gap: 10px;
             transition: all 0.2s;
         }
-        .btn-download-big:hover {
-            background: #e0bc6a;
+        .btn-dl-big:hover {
+            background: #fbbf24;
             transform: translateY(-2px);
-            box-shadow: 0 6px 20px rgba(201,168,76,0.4);
-        }
-
-        /* Scroll progress */
-        .progress-bar {
-            position: fixed;
-            top: 52px; left: 0;
-            height: 3px;
-            background: var(--gold);
-            width: 0%;
-            z-index: 999;
-            transition: width 0.1s;
+            box-shadow: 0 6px 20px rgba(245,158,11,0.4);
         }
 
         @media (max-width: 640px) {
-            .cv-header { padding: 28px 24px; }
-            .header-name h1 { font-size: 2rem; }
-            .cv-section { padding: 24px 20px; }
+            .cv-header { padding: 28px 22px; }
+            .header-name h1 { font-size: 1.9rem; }
+            .cv-section, .summary-card { padding: 22px 18px; }
             .metrics-row { grid-template-columns: 1fr 1fr; }
-            .projects-grid { grid-template-columns: 1fr; }
-            .skills-grid { grid-template-columns: 1fr; }
+            .proj-grid { grid-template-columns: 1fr; }
             .sticky-bar { padding: 10px 16px; }
+            .sticky-name { display: none; }
         }
     </style>
 </head>
 <body>
 
-<!-- Scroll progress bar -->
 <div class="progress-bar" id="progressBar"></div>
 
-<!-- Sticky download bar -->
+<!-- STICKY BAR -->
 <div class="sticky-bar">
-    <div class="name">Spyros <span>Papastergiou</span> — CV</div>
-    <a href="CV_Papastergiou_EN.pdf" download class="btn-download"
-       onclick="clarity('set', 'cv_download', 'sticky_bar'); clarity('set', 'cv_opened', new Date().toISOString());">
-        <i class="fas fa-download"></i> Download PDF
+    <a href="/" class="back-btn" onclick="clarity('set','btn_click','back')">
+        <i class="fas fa-arrow-left"></i> Portfolio
+    </a>
+    <div class="sticky-name">Spyros <span>Papastergiou</span> — CV</div>
+    <a href="CV_Papastergiou_EN.pdf" download class="btn-dl-sticky"
+       onclick="clarity('set','cv_download','sticky'); clarity('set','cv_opened', new Date().toISOString());">
+        <i class="fas fa-file-pdf"></i> Download PDF
     </a>
 </div>
 
-<div class="cv-wrapper">
+<div class="cv-wrap">
 
     <!-- HEADER -->
-    <div class="cv-header" id="section-header"
-         data-section="header">
+    <div class="cv-header fade-up" id="section-header">
         <div class="header-top">
             <div class="header-name">
                 <h1>Spyros Papastergiou</h1>
-                <div class="title">Economist · Financial Data Analyst · FinTech</div>
+                <div class="header-title">Economist · Financial Data Analyst · FinTech</div>
             </div>
             <div class="open-badge">OPEN TO WORK</div>
         </div>
         <div class="contact-row">
-            <a href="tel:+306982317823" class="contact-item"
-               onclick="clarity('set', 'contact_click', 'phone')">
+            <a href="tel:+306982317823" class="contact-item" onclick="clarity('set','contact_click','phone')">
                 <i class="fas fa-phone"></i> +30 698 231 7823
             </a>
-            <a href="/cdn-cgi/l/email-protection#d3a3b2a3b2a0a7b6a1b4babca6a0a393b4beb2babffdb0bcbe" class="contact-item" onclick="clarity('set', 'contact_click', 'email')">
-                <i class="fas fa-envelope"></i> <span class="__cf_email__" data-cfemail="fe8e9f8e9f8d8a9b8c9997918b8d8ebe99939f9792d09d9193">[email&#160;protected]</span>
+            <a href="mailto:papastergiousp@gmail.com" class="contact-item" onclick="clarity('set','contact_click','email')">
+                <i class="fas fa-envelope"></i> papastergiousp@gmail.com
             </a>
-            <a href="https://phytai.com" target="_blank" class="contact-item"
-               onclick="clarity('set', 'contact_click', 'portfolio')">
+            <a href="https://phytai.com" target="_blank" class="contact-item" onclick="clarity('set','contact_click','portfolio')">
                 <i class="fas fa-globe"></i> phytai.com
             </a>
-            <a href="https://github.com/papastergiousp-maker/My_Projects" target="_blank" class="contact-item"
-               onclick="clarity('set', 'contact_click', 'github')">
+            <a href="https://github.com/papastergiousp-maker/My_Projects" target="_blank" class="contact-item" onclick="clarity('set','contact_click','github')">
                 <i class="fab fa-github"></i> GitHub
             </a>
-            <a href="https://linkedin.com/in/spyros-papastergiou" target="_blank" class="contact-item"
-               onclick="clarity('set', 'contact_click', 'linkedin')">
+            <a href="https://linkedin.com/in/spyros-papastergiou" target="_blank" class="contact-item" onclick="clarity('set','contact_click','linkedin')">
                 <i class="fab fa-linkedin"></i> LinkedIn
             </a>
-            <span class="contact-item">
-                <i class="fas fa-map-marker-alt"></i> Farsala, Larissa, Greece
-            </span>
+            <span class="contact-item"><i class="fas fa-map-marker-alt"></i> Farsala, Larissa, Greece</span>
         </div>
     </div>
 
     <!-- SUMMARY -->
-    <div class="summary-box" id="section-summary">
+    <div class="summary-card fade-up delay-1" id="section-summary">
         <p>Financial Data Analyst with an Integrated Master's in Business Administration and hands-on experience in <strong>Python, SQL, Power BI, and Tableau</strong>. Proven track record across finance, quality control, and agricultural operations: <strong>23% cost reduction</strong>, 25% fewer raw material deviations, and <strong>98% drop in compliance penalties</strong>. Building a FinTech-focused project portfolio (25+ GitHub projects) in stock analysis, revenue forecasting, and risk modeling. Seeking a Data Analyst or FinTech Analyst role where data-driven decisions create measurable business impact.</p>
     </div>
 
     <!-- METRICS -->
-    <div class="metrics-row" id="section-metrics">
-        <div class="metric-card">
-            <div class="number">23<span>%</span></div>
-            <div class="label">Cost Reduction</div>
+    <div class="metrics-row fade-up delay-2" id="section-metrics">
+        <div class="metric">
+            <div class="num">23<span>%</span></div>
+            <div class="lbl">Cost Reduction</div>
         </div>
-        <div class="metric-card">
-            <div class="number">25<span>+</span></div>
-            <div class="label">GitHub Projects</div>
+        <div class="metric">
+            <div class="num">25<span>+</span></div>
+            <div class="lbl">GitHub Projects</div>
         </div>
-        <div class="metric-card">
-            <div class="number">98<span>%</span></div>
-            <div class="label">Penalty Reduction</div>
+        <div class="metric">
+            <div class="num">98<span>%</span></div>
+            <div class="lbl">Penalty Reduction</div>
         </div>
     </div>
 
     <!-- EXPERIENCE -->
-    <div class="cv-section" id="section-experience">
-        <div class="section-title">Work Experience</div>
+    <div class="cv-section fade-up delay-3" id="section-experience">
+        <div class="sec-title">Work Experience</div>
 
         <div class="exp-item">
-            <div class="exp-header">
+            <div class="exp-row">
                 <div class="exp-title">Office & Agronomy Assistant</div>
                 <div class="exp-date">02/2025 – 09/2025</div>
             </div>
             <div class="exp-company">Georgika Efodia Archontis · Farsala, Greece</div>
-            <ul class="exp-bullets">
+            <ul class="exp-list">
                 <li><strong>Database Development (Excel):</strong> Designed and maintained a structured Excel database for crop protection dosage calculations, replacing manual paper records.</li>
                 <li><strong>Cost Reduction:</strong> Applied data-driven cost/quality analysis delivering <strong>23% cost savings</strong> per producer and 15% customer base growth.</li>
-                <li><strong>Process Efficiency:</strong> Organized operational records improving office efficiency by 20%.</li>
+                <li><strong>Process Efficiency:</strong> Organized operational records and documentation, improving office efficiency by 20%.</li>
                 <li><strong>Client Advisory:</strong> Provided tailored technical guidance improving product application accuracy.</li>
             </ul>
-            <div class="skills-tags">
-                <span class="skill-tag">Excel</span>
-                <span class="skill-tag">Data Analysis</span>
-                <span class="skill-tag">Cost Optimization</span>
-                <span class="skill-tag">Client Advisory</span>
+            <div class="tags">
+                <span class="tag">Excel</span><span class="tag">Data Analysis</span>
+                <span class="tag">Cost Optimization</span><span class="tag">Client Advisory</span>
             </div>
         </div>
 
         <div class="exp-item">
-            <div class="exp-header">
+            <div class="exp-row">
                 <div class="exp-title">Quality Control Data Analyst</div>
                 <div class="exp-date">06/2024 – 09/2024</div>
             </div>
             <div class="exp-company">D. Nomikos Food Industry · Farsala, Greece</div>
-            <ul class="exp-bullets">
+            <ul class="exp-list">
                 <li><strong>Data Analysis (Python):</strong> Built a custom Python tool (Pandas, NumPy, Matplotlib) for production data analysis and financial loss prediction — published on GitHub.</li>
-                <li><strong>Quality & Compliance:</strong> Implemented HACCP and ISO 22000 protocols, reducing raw material deviations and waste by <strong>25%</strong>.</li>
+                <li><strong>Quality & Compliance:</strong> Implemented HACCP and ISO 22000 protocols, reducing raw material deviations by <strong>25%</strong>.</li>
                 <li><strong>Cost Impact:</strong> Conducted physicochemical analyses preventing batch rejections and reducing operational costs by <strong>15%</strong>.</li>
             </ul>
-            <div class="skills-tags">
-                <span class="skill-tag">Python</span>
-                <span class="skill-tag">Pandas</span>
-                <span class="skill-tag">NumPy</span>
-                <span class="skill-tag">HACCP</span>
-                <span class="skill-tag">ISO 22000</span>
+            <div class="tags">
+                <span class="tag">Python</span><span class="tag">Pandas</span>
+                <span class="tag">NumPy</span><span class="tag">HACCP</span><span class="tag">ISO 22000</span>
             </div>
         </div>
 
         <div class="exp-item">
-            <div class="exp-header">
+            <div class="exp-row">
                 <div class="exp-title">Accounting & Financial Data Assistant</div>
                 <div class="exp-date">05/2019 – 10/2019</div>
             </div>
             <div class="exp-company">Balkura Konstantia Accounting Office · Domokos, Greece</div>
-            <ul class="exp-bullets">
-                <li><strong>Bookkeeping:</strong> Maintained single-entry records using Epsilon Net – EXTRA.</li>
+            <ul class="exp-list">
+                <li><strong>Bookkeeping:</strong> Maintained single-entry records and organized financial archives using Epsilon Net – EXTRA.</li>
                 <li><strong>VAT Processing:</strong> Processed invoices reducing late VAT submission penalties by <strong>98%</strong>.</li>
                 <li><strong>Client Portfolio:</strong> Managed client communication contributing to <strong>20% growth</strong> in active clients.</li>
             </ul>
-            <div class="skills-tags">
-                <span class="skill-tag">Epsilon Net</span>
-                <span class="skill-tag">Bookkeeping</span>
-                <span class="skill-tag">VAT Processing</span>
-                <span class="skill-tag">Financial Records</span>
+            <div class="tags">
+                <span class="tag">Epsilon Net</span><span class="tag">Bookkeeping</span>
+                <span class="tag">VAT Processing</span><span class="tag">Financial Records</span>
             </div>
         </div>
     </div>
 
     <!-- PROJECTS -->
     <div class="cv-section" id="section-projects">
-        <div class="section-title">Top 6 Projects</div>
-        <div class="projects-grid">
-            <a class="project-card" href="https://github.com/papastergiousp-maker/Power-BI/blob/main/Power_BI_Screenshots/SUPER-Market%20KPIS.pdf" target="_blank"
-               onclick="clarity('set', 'project_click', 'supermarket_kpis')">
-                <div class="project-tool">Power BI · 📊 View</div>
-                <div class="project-name">Supermarket KPIs Dashboard</div>
-                <div class="project-desc">Retail sales, customer segmentation & gross income analysis</div>
+        <div class="sec-title">Top 6 Projects</div>
+        <div class="proj-grid">
+            <a class="proj-card" href="https://github.com/papastergiousp-maker/Power-BI/blob/main/Power_BI_Screenshots/SUPER-Market%20KPIS.pdf" target="_blank" onclick="clarity('set','project_click','supermarket')">
+                <div class="proj-tool">Power BI · 📊 View</div>
+                <div class="proj-name">Supermarket KPIs Dashboard</div>
+                <div class="proj-desc">Retail sales, customer segmentation & gross income analysis</div>
             </a>
-            <a class="project-card" href="https://github.com/papastergiousp-maker/Power-BI/blob/main/Power_BI_Screenshots/Final%20Assigment.pdf" target="_blank"
-               onclick="clarity('set', 'project_click', 'operational_kpi')">
-                <div class="project-tool">Power BI · 📊 View</div>
-                <div class="project-name">Operational KPI & Quality Control</div>
-                <div class="project-desc">Employee performance, defect tracking & quality score monitoring</div>
+            <a class="proj-card" href="https://github.com/papastergiousp-maker/Power-BI/blob/main/Power_BI_Screenshots/Final%20Assigment.pdf" target="_blank" onclick="clarity('set','project_click','operational_kpi')">
+                <div class="proj-tool">Power BI · 📊 View</div>
+                <div class="proj-name">Operational KPI & Quality Control</div>
+                <div class="proj-desc">Employee performance, defect tracking & quality score monitoring</div>
             </a>
-            <a class="project-card" href="https://public.tableau.com/app/profile/spyros.papastergiou/viz/TableauFinalAssigment_17639274180640/Dashboard1" target="_blank"
-               onclick="clarity('set', 'project_click', 'sales_profitability')">
-                <div class="project-tool">Tableau · 📊 View</div>
-                <div class="project-name">Sales Profitability & Shipping</div>
-                <div class="project-desc">Profit analysis, order trends & regional sales performance</div>
+            <a class="proj-card" href="https://public.tableau.com/app/profile/spyros.papastergiou/viz/TableauFinalAssigment_17639274180640/Dashboard1" target="_blank" onclick="clarity('set','project_click','sales_prof')">
+                <div class="proj-tool">Tableau · 📊 View</div>
+                <div class="proj-name">Sales Profitability & Shipping</div>
+                <div class="proj-desc">Profit analysis, order trends & regional sales performance</div>
             </a>
-            <a class="project-card" href="https://public.tableau.com/app/profile/spyros.papastergiou/viz/CreditCardHabitsinindia/Dashboard1" target="_blank"
-               onclick="clarity('set', 'project_click', 'credit_card_analytics')">
-                <div class="project-tool">Tableau · 📊 View</div>
-                <div class="project-name">Credit Card Spending Analytics</div>
-                <div class="project-desc">Financial data visualization & consumer behaviour analysis</div>
+            <a class="proj-card" href="https://public.tableau.com/app/profile/spyros.papastergiou/viz/CreditCardHabitsinindia/Dashboard1" target="_blank" onclick="clarity('set','project_click','credit_card')">
+                <div class="proj-tool">Tableau · 📊 View</div>
+                <div class="proj-name">Credit Card Spending Analytics</div>
+                <div class="proj-desc">Financial data visualization & consumer behaviour analysis</div>
             </a>
-            <a class="project-card" href="https://github.com/papastergiousp-maker/Python_Financial_Data_Analytics/blob/main/Retail_Analysis/FINANCE_LIQUOR_SALES.ipynb" target="_blank"
-               onclick="clarity('set', 'project_click', 'retail_finance')">
-                <div class="project-tool">Python · Pandas · 📂 Repo</div>
-                <div class="project-name">Retail Finance Sales Analysis</div>
-                <div class="project-desc">Data cleaning, ETL, market share & distribution analysis</div>
+            <a class="proj-card" href="https://github.com/papastergiousp-maker/Python_Financial_Data_Analytics/blob/main/Retail_Analysis/FINANCE_LIQUOR_SALES.ipynb" target="_blank" onclick="clarity('set','project_click','retail_finance')">
+                <div class="proj-tool">Python · Pandas · 📂 Repo</div>
+                <div class="proj-name">Retail Finance Sales Analysis</div>
+                <div class="proj-desc">Data cleaning, ETL, market share & distribution analysis</div>
             </a>
-            <a class="project-card" href="https://phytai.com/dashboard" target="_blank"
-               onclick="clarity('set', 'project_click', 'live_dashboard')">
-                <div class="project-tool">Python · Plotly · 🌐 Live</div>
-                <div class="project-name">Business Analytics Dashboard</div>
-                <div class="project-desc">Interactive live dashboard — phytai.com</div>
+            <a class="proj-card" href="https://phytai.com/dashboard" target="_blank" onclick="clarity('set','project_click','live_dashboard')">
+                <div class="proj-tool">Python · Plotly · 🌐 Live</div>
+                <div class="proj-name">Business Analytics Dashboard</div>
+                <div class="proj-desc">Interactive live dashboard — phytai.com</div>
             </a>
         </div>
     </div>
 
     <!-- SKILLS -->
     <div class="cv-section" id="section-skills">
-        <div class="section-title">Technical Skills</div>
-        <div class="skills-grid">
-            <div>
-                <div class="skill-group-title">Languages & Libraries</div>
-                <div class="skill-list">Python (Pandas, NumPy, Matplotlib, Seaborn, Plotly, Jupyter)<br>Python for Finance · SQL (SELECT, JOINs, Aggregation)<br>Data Cleaning · Data Wrangling · ETL</div>
-            </div>
-            <div>
-                <div class="skill-group-title">BI & Visualization</div>
-                <div class="skill-list">Power BI · Tableau · DAX<br>KPI Reporting · Financial Visualization<br>Stakeholder Reporting · Data Pipeline</div>
-            </div>
-            <div>
-                <div class="skill-group-title">Excel & Finance</div>
-                <div class="skill-list">Advanced Excel — Pivot Tables, Power Query<br>Financial Modeling · Predictive Analytics<br>Forecasting · Risk Analysis · Budgeting<br>Epsilon Net – EXTRA</div>
-            </div>
-            <div>
-                <div class="skill-group-title">Other Tools</div>
-                <div class="skill-list">IBM SPSS · Variance Analysis<br>GitHub · VSCode · Google Workspace<br>MS Office Suite · HACCP · ISO 22000</div>
-            </div>
-        </div>
+        <div class="sec-title">Technical Skills</div>
+        <table class="skills-table">
+            <tr>
+                <td>Languages & Libraries</td>
+                <td>Python (Pandas, NumPy, Matplotlib, Seaborn, Plotly, Jupyter) · Python for Finance · SQL · ETL · Data Wrangling</td>
+            </tr>
+            <tr>
+                <td>BI & Visualization</td>
+                <td>Power BI · Tableau · DAX · KPI Reporting · Financial Visualization · Stakeholder Reporting</td>
+            </tr>
+            <tr>
+                <td>Excel & Finance</td>
+                <td>Advanced Excel · Pivot Tables · Power Query · Financial Modeling · Predictive Analytics · Forecasting · Risk Analysis · Epsilon Net – EXTRA</td>
+            </tr>
+            <tr>
+                <td>Other Tools</td>
+                <td>IBM SPSS · GitHub · VSCode · Google Workspace · MS Office · HACCP · ISO 22000</td>
+            </tr>
+        </table>
     </div>
 
-    <!-- EDUCATION & CERTS -->
+    <!-- EDUCATION -->
     <div class="cv-section" id="section-education">
-        <div class="section-title">Education & Certifications</div>
+        <div class="sec-title">Education & Certifications</div>
 
-        <div class="edu-item">
+        <div class="edu-row">
             <div>
-                <div class="edu-title">Integrated Master's Degree — Business Administration of Agricultural Products & Food</div>
-                <div class="edu-sub">University of Patras · School of Economics & Business Administration · Agrinio, Greece</div>
+                <div class="edu-title">Integrated Master's — Business Administration of Agricultural Products & Food</div>
+                <div class="edu-sub">University of Patras · School of Economics & Business Administration · Agrinio</div>
             </div>
             <div class="edu-year">2023</div>
         </div>
-
-        <div class="edu-item">
+        <div class="edu-row">
             <div>
                 <div class="edu-title">Financial Data Analytics Certification</div>
-                <div class="edu-sub">Workearly · Financial Modeling, Predictive Analytics, Power BI, Tableau, Python for Finance, SQL, Advanced Excel</div>
+                <div class="edu-sub">Workearly · Financial Modeling, Power BI, Tableau, Python for Finance, SQL, Advanced Excel</div>
             </div>
             <div class="edu-year">2026</div>
         </div>
-
-        <div class="edu-item">
+        <div class="edu-row">
             <div>
                 <div class="edu-title">Licensed Tax Accountant</div>
                 <div class="edu-sub">Economic Chamber of Greece (OEE)</div>
             </div>
             <div class="edu-year">2025</div>
         </div>
-
-        <div class="edu-item">
+        <div class="edu-row">
             <div>
                 <div class="edu-title">English Language — B2</div>
                 <div class="edu-sub">LRN Certified</div>
@@ -726,87 +599,65 @@
         </div>
 
         <div style="margin-top: 20px;">
-            <div class="section-title" style="margin-bottom: 12px;">Languages</div>
+            <div class="sec-title" style="margin-bottom: 12px;">Languages</div>
             <div class="lang-row">
                 <div class="lang-item">
                     <span class="lang-name">Greek</span>
-                    <span class="lang-level">Native</span>
+                    <span class="lang-lvl">Native</span>
                 </div>
                 <div class="lang-item">
                     <span class="lang-name">English</span>
-                    <span class="lang-level">B2 — LRN Certified</span>
+                    <span class="lang-lvl">B2 — LRN Certified</span>
                 </div>
             </div>
         </div>
     </div>
 
-    <!-- DOWNLOAD SECTION -->
+    <!-- DOWNLOAD -->
     <div class="download-section" id="section-download">
-        <h3>Download Full CV</h3>
-        <p>Get the PDF version to submit with your application</p>
-        <a href="CV_Papastergiou_EN.pdf" download class="btn-download-big"
-           onclick="clarity('set', 'cv_download', 'bottom_button'); clarity('set', 'cv_opened', new Date().toISOString()); clarity('set', 'cv_source', document.referrer || 'direct');">
+        <h3>Download CV — PDF</h3>
+        <p>Ready to add to your database or ATS system</p>
+        <a href="CV_Papastergiou_EN.pdf" download class="btn-dl-big"
+           onclick="clarity('set','cv_download','bottom'); clarity('set','cv_opened', new Date().toISOString()); clarity('set','cv_source', document.referrer||'direct');">
             <i class="fas fa-file-pdf"></i> Download CV — PDF
         </a>
     </div>
 
 </div>
 
-<script data-cfasync="false" src="/cdn-cgi/scripts/5c5dd728/cloudflare-static/email-decode.min.js"></script><script>
-    // ── SCROLL PROGRESS BAR ──────────────────────────────────
+<script>
+    // Progress bar
     window.addEventListener('scroll', () => {
-        const scrollTop = window.scrollY;
-        const docHeight = document.body.scrollHeight - window.innerHeight;
-        const progress = (scrollTop / docHeight) * 100;
-        document.getElementById('progressBar').style.width = progress + '%';
-
-        // Track scroll depth milestones
-        if (progress > 25 && !window._tracked25) {
-            window._tracked25 = true;
-            clarity('set', 'scroll_depth', '25%');
-        }
-        if (progress > 50 && !window._tracked50) {
-            window._tracked50 = true;
-            clarity('set', 'scroll_depth', '50%');
-        }
-        if (progress > 75 && !window._tracked75) {
-            window._tracked75 = true;
-            clarity('set', 'scroll_depth', '75%');
-        }
-        if (progress > 90 && !window._tracked90) {
-            window._tracked90 = true;
-            clarity('set', 'scroll_depth', '90%');
-        }
+        const p = (window.scrollY / (document.body.scrollHeight - window.innerHeight)) * 100;
+        document.getElementById('progressBar').style.width = p + '%';
+        if (p > 25  && !window._t25)  { window._t25  = true; clarity('set','scroll_depth','25%');  }
+        if (p > 50  && !window._t50)  { window._t50  = true; clarity('set','scroll_depth','50%');  }
+        if (p > 75  && !window._t75)  { window._t75  = true; clarity('set','scroll_depth','75%');  }
+        if (p > 90  && !window._t90)  { window._t90  = true; clarity('set','scroll_depth','90%');  }
     });
 
-    // ── SECTION VISIBILITY TRACKING ─────────────────────────
-    const sections = [
-        { id: 'section-header',     name: 'header' },
-        { id: 'section-summary',    name: 'summary' },
-        { id: 'section-metrics',    name: 'metrics' },
-        { id: 'section-experience', name: 'experience' },
-        { id: 'section-projects',   name: 'projects' },
-        { id: 'section-skills',     name: 'skills' },
-        { id: 'section-education',  name: 'education' },
-        { id: 'section-download',   name: 'download_section' },
-    ];
-
-    const observer = new IntersectionObserver((entries) => {
-        entries.forEach(entry => {
-            if (entry.isIntersecting) {
-                const section = sections.find(s => s.id === entry.target.id);
-                if (section && !window['_seen_' + section.name]) {
-                    window['_seen_' + section.name] = true;
-                    clarity('set', 'section_viewed', section.name);
-                }
+    // Section tracking
+    const observer = new IntersectionObserver(entries => {
+        entries.forEach(e => {
+            if (e.isIntersecting && !window['_s_'+e.target.id]) {
+                window['_s_'+e.target.id] = true;
+                clarity('set', 'section_viewed', e.target.id.replace('section-',''));
             }
         });
     }, { threshold: 0.3 });
 
-    sections.forEach(s => {
-        const el = document.getElementById(s.id);
+    ['section-header','section-summary','section-metrics',
+     'section-experience','section-projects','section-skills',
+     'section-education','section-download'].forEach(id => {
+        const el = document.getElementById(id);
         if (el) observer.observe(el);
     });
 
-    // ── TIME ON PAGE ─────────────────────────────────────────
-    c
+    // Time on page
+    const t0 = Date.now();
+    window.addEventListener('beforeunload', () => {
+        clarity('set', 'time_on_cv', Math.round((Date.now()-t0)/1000) + 's');
+    });
+</script>
+</body>
+</html>
