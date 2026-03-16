@@ -1,0 +1,507 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Job Search | Spyros Papastergiou</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Playfair+Display:wght@700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <script type="text/javascript">
+        (function(c,l,a,r,i,t,y){
+            c[a]=c[a]||function(){(c[a].q=c[a].q||[]).push(arguments)};
+            t=l.createElement(r);t.async=1;t.src="https://www.clarity.ms/tag/"+i;
+            y=l.getElementsByTagName(r)[0];y.parentNode.insertBefore(t,y);
+        })(window, document, "clarity", "script", "vr1rwybrwi");
+    </script>
+    <style>
+        :root {
+            --navy: #0d1f35;
+            --accent: #2563eb;
+            --gold: #f59e0b;
+            --light: #f8fafc;
+            --text: #1e293b;
+            --muted: #64748b;
+            --border: #e2e8f0;
+            --white: #ffffff;
+        }
+
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+
+        body {
+            font-family: 'Inter', sans-serif;
+            background: var(--light);
+            color: var(--text);
+            min-height: 100vh;
+        }
+
+        /* ── FADE IN ── */
+        @keyframes fadeUp { from{opacity:0;transform:translateY(16px)} to{opacity:1;transform:translateY(0)} }
+        .fade { animation: fadeUp 0.4s ease both; }
+        .d1{animation-delay:.05s} .d2{animation-delay:.1s} .d3{animation-delay:.15s}
+        .d4{animation-delay:.2s}  .d5{animation-delay:.25s} .d6{animation-delay:.3s}
+        .d7{animation-delay:.35s} .d8{animation-delay:.4s}  .d9{animation-delay:.45s}
+
+        /* ── STICKY BAR ── */
+        .sticky-bar {
+            position: fixed; top: 0; left: 0; right: 0;
+            background: var(--navy); padding: 10px 32px;
+            display: flex; align-items: center; justify-content: space-between;
+            z-index: 1000; box-shadow: 0 1px 20px rgba(0,0,0,.25);
+        }
+        .back-btn {
+            color: rgba(255,255,255,.6); font-size: .82rem;
+            text-decoration: none; display: flex; align-items: center; gap: 6px;
+            transition: color .2s;
+        }
+        .back-btn:hover { color: var(--gold); }
+        .sticky-title { color: white; font-size: .88rem; font-weight: 500; }
+        .sticky-title span { color: var(--gold); }
+
+        /* ── WRAPPER ── */
+        .wrap { max-width: 900px; margin: 0 auto; padding: 80px 20px 60px; }
+
+        /* ── HEADER ── */
+        .page-header {
+            background: var(--navy);
+            border-radius: 14px;
+            padding: 36px 40px;
+            margin-bottom: 24px;
+            position: relative;
+            overflow: hidden;
+        }
+        .page-header::before {
+            content: '';
+            position: absolute; top: -40px; right: -40px;
+            width: 200px; height: 200px;
+            background: radial-gradient(circle, rgba(245,158,11,.15) 0%, transparent 70%);
+            border-radius: 50%; pointer-events: none;
+        }
+        .page-header h1 {
+            font-family: 'Playfair Display', serif;
+            color: white; font-size: 1.9rem; margin-bottom: 6px;
+        }
+        .page-header p {
+            color: rgba(255,255,255,.6); font-size: .88rem; max-width: 520px;
+        }
+        .page-header p strong { color: var(--gold); }
+
+        /* ── SEARCH QUERIES ── */
+        .queries-row {
+            display: flex; flex-wrap: wrap; gap: 8px;
+            margin-top: 16px;
+        }
+        .query-tag {
+            background: rgba(255,255,255,.08);
+            border: 1px solid rgba(255,255,255,.15);
+            color: rgba(255,255,255,.8);
+            font-size: .75rem; padding: 4px 12px;
+            border-radius: 20px; font-weight: 500;
+        }
+
+        /* ── SECTION TITLE ── */
+        .section-label {
+            font-size: .65rem; font-weight: 800;
+            text-transform: uppercase; letter-spacing: 2.5px;
+            color: var(--navy); margin-bottom: 14px;
+            display: flex; align-items: center; gap: 10px;
+            padding-bottom: 8px;
+            border-bottom: 2px solid var(--gold);
+        }
+        .section-label::after { content: ''; flex: 1; height: 1px; background: var(--border); }
+
+        /* ── JOBS GRID ── */
+        .jobs-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 14px;
+            margin-bottom: 28px;
+        }
+
+        .job-card {
+            background: var(--white);
+            border-radius: 12px;
+            padding: 20px;
+            border: 1px solid var(--border);
+            text-decoration: none;
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+            transition: all .2s;
+            box-shadow: 0 1px 6px rgba(0,0,0,.05);
+            position: relative;
+            overflow: hidden;
+        }
+        .job-card::before {
+            content: '';
+            position: absolute; top: 0; left: 0; right: 0;
+            height: 3px;
+            background: var(--card-color, var(--accent));
+            border-radius: 12px 12px 0 0;
+        }
+        .job-card:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 8px 20px rgba(0,0,0,.1);
+            border-color: var(--card-color, var(--accent));
+        }
+
+        .card-top {
+            display: flex; align-items: flex-start;
+            justify-content: space-between; gap: 8px;
+        }
+        .card-icon {
+            width: 42px; height: 42px;
+            border-radius: 10px;
+            background: var(--card-bg, #eff6ff);
+            display: flex; align-items: center; justify-content: center;
+            font-size: 1.1rem; flex-shrink: 0;
+        }
+        .card-arrow {
+            color: var(--muted); font-size: .7rem;
+            transition: color .2s;
+        }
+        .job-card:hover .card-arrow { color: var(--card-color, var(--accent)); }
+
+        .card-name {
+            font-weight: 700; font-size: .95rem;
+            color: var(--navy); line-height: 1.2;
+        }
+        .card-url {
+            font-size: .72rem; color: var(--muted);
+        }
+        .card-desc {
+            font-size: .78rem; color: var(--muted);
+            line-height: 1.5;
+        }
+        .card-badge {
+            display: inline-flex; align-items: center; gap: 4px;
+            font-size: .68rem; font-weight: 600;
+            padding: 3px 8px; border-radius: 20px;
+            width: fit-content;
+        }
+        .badge-gr { background: #eff6ff; color: #2563eb; }
+        .badge-int { background: #f0fdf4; color: #16a34a; }
+        .badge-remote { background: #fef3c7; color: #d97706; }
+
+        /* ── TIP BOX ── */
+        .tip-box {
+            background: white;
+            border-radius: 12px;
+            padding: 20px 24px;
+            border-left: 3px solid var(--gold);
+            box-shadow: 0 1px 6px rgba(0,0,0,.05);
+            margin-bottom: 24px;
+            font-size: .85rem;
+            color: var(--muted);
+            line-height: 1.7;
+        }
+        .tip-box strong { color: var(--navy); }
+
+        /* ── FOOTER ── */
+        .page-footer {
+            text-align: center; font-size: .7rem;
+            color: #94a3b8; padding: 0 0 20px;
+        }
+
+        @media (max-width: 640px) {
+            .jobs-grid { grid-template-columns: 1fr 1fr; }
+            .page-header { padding: 24px 20px; }
+            .page-header h1 { font-size: 1.5rem; }
+            .sticky-bar { padding: 10px 16px; }
+        }
+        @media (max-width: 420px) {
+            .jobs-grid { grid-template-columns: 1fr; }
+        }
+    </style>
+</head>
+<body>
+
+<!-- STICKY BAR -->
+<div class="sticky-bar">
+    <a href="/" class="back-btn" onclick="clarity('set','btn_click','back_from_jobs')">
+        <i class="fas fa-arrow-left"></i> Portfolio
+    </a>
+    <div class="sticky-title">Spyros <span>Papastergiou</span> — Job Search</div>
+    <a href="/cv" class="back-btn" style="color:rgba(255,255,255,.6);" onclick="clarity('set','btn_click','cv_from_jobs')">
+        CV <i class="fas fa-arrow-right"></i>
+    </a>
+</div>
+
+<div class="wrap">
+
+    <!-- PAGE HEADER -->
+    <div class="page-header fade">
+        <h1>Job Search Hub</h1>
+        <p>Αγγελίες για <strong>Financial Analyst · Business Analyst · Data Analyst</strong> — όλα τα sites σε ένα μέρος.</p>
+        <div class="queries-row">
+            <span class="query-tag">Data Analyst</span>
+            <span class="query-tag">Business Analyst</span>
+            <span class="query-tag">Financial Analyst</span>
+            <span class="query-tag">BI Analyst</span>
+            <span class="query-tag">Power BI</span>
+            <span class="query-tag">SQL Analyst</span>
+            <span class="query-tag">Junior Analyst</span>
+            <span class="query-tag">FinTech</span>
+        </div>
+    </div>
+
+    <!-- TIP -->
+    <div class="tip-box fade d1">
+        💡 <strong>Tip:</strong> Κάθε κουμπί ανοίγει απευθείας τα αποτελέσματα αναζήτησης για analyst θέσεις. Δεν χρειάζεται να πληκτρολογήσεις τίποτα — απλά κλικ και βλέπεις τις αγγελίες.
+    </div>
+
+    <!-- GREEK JOB SITES -->
+    <div class="section-label fade d2">🇬🇷 Ελληνικά Job Sites</div>
+    <div class="jobs-grid">
+
+        <a class="job-card fade d2" href="https://www.kariera.gr/en/jobs?q=data+analyst+business+analyst+financial+analyst" target="_blank"
+           style="--card-color:#e91e8c; --card-bg:#fdf2f8;"
+           onclick="clarity('set','job_site_click','kariera')">
+            <div class="card-top">
+                <div class="card-icon">💼</div>
+                <i class="fas fa-external-link-alt card-arrow"></i>
+            </div>
+            <div>
+                <div class="card-name">Kariera.gr</div>
+                <div class="card-url">kariera.gr</div>
+            </div>
+            <div class="card-desc">Το μεγαλύτερο ελληνικό job board — εκατοντάδες αγγελίες analyst</div>
+            <span class="card-badge badge-gr">🇬🇷 Ελληνικό</span>
+        </a>
+
+        <a class="job-card fade d3" href="https://www.skywalker.gr/en/jobs?q=data+analyst" target="_blank"
+           style="--card-color:#1565c0; --card-bg:#eff6ff;"
+           onclick="clarity('set','job_site_click','skywalker')">
+            <div class="card-top">
+                <div class="card-icon">🚀</div>
+                <i class="fas fa-external-link-alt card-arrow"></i>
+            </div>
+            <div>
+                <div class="card-name">Skywalker.gr</div>
+                <div class="card-url">skywalker.gr</div>
+            </div>
+            <div class="card-desc">Εξειδικευμένο σε επαγγελματικές θέσεις & στελέχη</div>
+            <span class="card-badge badge-gr">🇬🇷 Ελληνικό</span>
+        </a>
+
+        <a class="job-card fade d4" href="https://www.jobfind.gr/jobs?q=data+analyst+financial+analyst" target="_blank"
+           style="--card-color:#f57c00; --card-bg:#fff8f0;"
+           onclick="clarity('set','job_site_click','jobfind')">
+            <div class="card-top">
+                <div class="card-icon">🔍</div>
+                <i class="fas fa-external-link-alt card-arrow"></i>
+            </div>
+            <div>
+                <div class="card-name">JobFind.gr</div>
+                <div class="card-url">jobfind.gr</div>
+            </div>
+            <div class="card-desc">Μεγάλο ελληνικό job board με αγγελίες από όλη την Ελλάδα</div>
+            <span class="card-badge badge-gr">🇬🇷 Ελληνικό</span>
+        </a>
+
+        <a class="job-card fade d3" href="https://www.e-startups.gr/jobs?q=analyst" target="_blank"
+           style="--card-color:#7c3aed; --card-bg:#f5f3ff;"
+           onclick="clarity('set','job_site_click','e_startups')">
+            <div class="card-top">
+                <div class="card-icon">💡</div>
+                <i class="fas fa-external-link-alt card-arrow"></i>
+            </div>
+            <div>
+                <div class="card-name">e-Startups.gr</div>
+                <div class="card-url">e-startups.gr</div>
+            </div>
+            <div class="card-desc">Startups & tech εταιρείες — ιδανικό για FinTech θέσεις</div>
+            <span class="card-badge badge-gr">🇬🇷 Startups</span>
+        </a>
+
+        <a class="job-card fade d4" href="https://www.xo.gr/jobs/?q=analyst" target="_blank"
+           style="--card-color:#0097a7; --card-bg:#e0f7fa;"
+           onclick="clarity('set','job_site_click','xo')">
+            <div class="card-top">
+                <div class="card-icon">📋</div>
+                <i class="fas fa-external-link-alt card-arrow"></i>
+            </div>
+            <div>
+                <div class="card-name">XO.gr</div>
+                <div class="card-url">xo.gr</div>
+            </div>
+            <div class="card-desc">Αγγελίες εργασίας από εταιρείες και ιδιώτες</div>
+            <span class="card-badge badge-gr">🇬🇷 Ελληνικό</span>
+        </a>
+
+        <a class="job-card fade d5" href="https://www.ergasiaonline.gr/aggellies?q=analyst" target="_blank"
+           style="--card-color:#2e7d32; --card-bg:#f0fdf4;"
+           onclick="clarity('set','job_site_click','ergasiaonline')">
+            <div class="card-top">
+                <div class="card-icon">🌐</div>
+                <i class="fas fa-external-link-alt card-arrow"></i>
+            </div>
+            <div>
+                <div class="card-name">ErgasiaOnline.gr</div>
+                <div class="card-url">ergasiaonline.gr</div>
+            </div>
+            <div class="card-desc">Αγγελίες από όλη την Ελλάδα — καλύπτει και επαρχία</div>
+            <span class="card-badge badge-gr">🇬🇷 Ελληνικό</span>
+        </a>
+
+    </div>
+
+    <!-- INTERNATIONAL -->
+    <div class="section-label fade d4">🌍 International — Remote & Greece</div>
+    <div class="jobs-grid">
+
+        <a class="job-card fade d4" href="https://www.linkedin.com/jobs/search/?keywords=data%20analyst&location=Greece" target="_blank"
+           style="--card-color:#0077b5; --card-bg:#eff6ff;"
+           onclick="clarity('set','job_site_click','linkedin')">
+            <div class="card-top">
+                <div class="card-icon">💼</div>
+                <i class="fas fa-external-link-alt card-arrow"></i>
+            </div>
+            <div>
+                <div class="card-name">LinkedIn Jobs</div>
+                <div class="card-url">linkedin.com/jobs</div>
+            </div>
+            <div class="card-desc">Το μεγαλύτερο επαγγελματικό δίκτυο — πολλές remote θέσεις</div>
+            <span class="card-badge badge-int">🌍 International</span>
+        </a>
+
+        <a class="job-card fade d5" href="https://gr.indeed.com/jobs?q=data+analyst+financial+analyst&l=Greece" target="_blank"
+           style="--card-color:#2164f3; --card-bg:#eff6ff;"
+           onclick="clarity('set','job_site_click','indeed')">
+            <div class="card-top">
+                <div class="card-icon">🔎</div>
+                <i class="fas fa-external-link-alt card-arrow"></i>
+            </div>
+            <div>
+                <div class="card-name">Indeed Greece</div>
+                <div class="card-url">gr.indeed.com</div>
+            </div>
+            <div class="card-desc">Μεγάλος αριθμός αγγελιών — ελληνικές & διεθνείς εταιρείες</div>
+            <span class="card-badge badge-int">🌍 International</span>
+        </a>
+
+        <a class="job-card fade d6" href="https://www.glassdoor.com/Job/greece-data-analyst-jobs-SRCH_IL.0,6_IN77_KO7,19.htm" target="_blank"
+           style="--card-color:#0caa41; --card-bg:#f0fdf4;"
+           onclick="clarity('set','job_site_click','glassdoor')">
+            <div class="card-top">
+                <div class="card-icon">🚪</div>
+                <i class="fas fa-external-link-alt card-arrow"></i>
+            </div>
+            <div>
+                <div class="card-name">Glassdoor</div>
+                <div class="card-url">glassdoor.com</div>
+            </div>
+            <div class="card-desc">Αγγελίες + κριτικές εταιρειών & μισθοί — πολύτιμο εργαλείο</div>
+            <span class="card-badge badge-int">🌍 + Reviews</span>
+        </a>
+
+        <a class="job-card fade d5" href="https://www.welcometothejungle.com/en/jobs?query=data%20analyst&where=Greece" target="_blank"
+           style="--card-color:#f7284a; --card-bg:#fff0f2;"
+           onclick="clarity('set','job_site_click','wttj')">
+            <div class="card-top">
+                <div class="card-icon">🌴</div>
+                <i class="fas fa-external-link-alt card-arrow"></i>
+            </div>
+            <div>
+                <div class="card-name">Welcome to the Jungle</div>
+                <div class="card-url">welcometothejungle.com</div>
+            </div>
+            <div class="card-desc">Modern job platform — tech & data εταιρείες</div>
+            <span class="card-badge badge-int">🌍 Tech Focus</span>
+        </a>
+
+        <a class="job-card fade d6" href="https://remotive.com/remote-jobs/data?search=analyst" target="_blank"
+           style="--card-color:#7c3aed; --card-bg:#f5f3ff;"
+           onclick="clarity('set','job_site_click','remotive')">
+            <div class="card-top">
+                <div class="card-icon">🏠</div>
+                <i class="fas fa-external-link-alt card-arrow"></i>
+            </div>
+            <div>
+                <div class="card-name">Remotive</div>
+                <div class="card-url">remotive.com</div>
+            </div>
+            <div class="card-desc">100% remote θέσεις — data & finance roles παγκοσμίως</div>
+            <span class="card-badge badge-remote">🏠 Remote Only</span>
+        </a>
+
+        <a class="job-card fade d7" href="https://www.eurojobs.com/search-jobs/data-analyst/greece/" target="_blank"
+           style="--card-color:#1565c0; --card-bg:#eff6ff;"
+           onclick="clarity('set','job_site_click','eurojobs')">
+            <div class="card-top">
+                <div class="card-icon">🇪🇺</div>
+                <i class="fas fa-external-link-alt card-arrow"></i>
+            </div>
+            <div>
+                <div class="card-name">EuroJobs</div>
+                <div class="card-url">eurojobs.com</div>
+            </div>
+            <div class="card-desc">Ευρωπαϊκές θέσεις — ιδανικό αν θέλεις να φύγεις εξωτερικό</div>
+            <span class="card-badge badge-int">🇪🇺 Europe</span>
+        </a>
+
+    </div>
+
+    <!-- EURES -->
+    <div class="section-label fade d7">🏛️ Δημόσια & ΕΦΚΑ</div>
+    <div class="jobs-grid">
+
+        <a class="job-card fade d7" href="https://eures.ec.europa.eu/jobs-and-cv_en?query=data+analyst&country=GR" target="_blank"
+           style="--card-color:#003399; --card-bg:#eef2ff;"
+           onclick="clarity('set','job_site_click','eures')">
+            <div class="card-top">
+                <div class="card-icon">🇪🇺</div>
+                <i class="fas fa-external-link-alt card-arrow"></i>
+            </div>
+            <div>
+                <div class="card-name">EURES</div>
+                <div class="card-url">eures.ec.europa.eu</div>
+            </div>
+            <div class="card-desc">Επίσημο ευρωπαϊκό portal εργασίας — αξιόπιστες αγγελίες</div>
+            <span class="card-badge badge-int">🇪🇺 EU Official</span>
+        </a>
+
+        <a class="job-card fade d8" href="https://www.oaed.gr/aggellies-ergasias" target="_blank"
+           style="--card-color:#1a237e; --card-bg:#eef2ff;"
+           onclick="clarity('set','job_site_click','oaed')">
+            <div class="card-top">
+                <div class="card-icon">🏛️</div>
+                <i class="fas fa-external-link-alt card-arrow"></i>
+            </div>
+            <div>
+                <div class="card-name">ΔΥΠΑ (πρ. ΟΑΕΔ)</div>
+                <div class="card-url">oaed.gr</div>
+            </div>
+            <div class="card-desc">Επίσημες αγγελίες & προγράμματα επιδοτούμενης απασχόλησης</div>
+            <span class="card-badge badge-gr">🇬🇷 Επίσημο</span>
+        </a>
+
+        <a class="job-card fade d9" href="https://www.businessdaily.gr/epixeiriseis/agghelies" target="_blank"
+           style="--card-color:#b71c1c; --card-bg:#fff5f5;"
+           onclick="clarity('set','job_site_click','businessdaily')">
+            <div class="card-top">
+                <div class="card-icon">📰</div>
+                <i class="fas fa-external-link-alt card-arrow"></i>
+            </div>
+            <div>
+                <div class="card-name">Business Daily</div>
+                <div class="card-url">businessdaily.gr</div>
+            </div>
+            <div class="card-desc">Αγγελίες από μεγάλες ελληνικές επιχειρήσεις & groups</div>
+            <span class="card-badge badge-gr">🇬🇷 Business</span>
+        </a>
+
+    </div>
+
+    <!-- FOOTER -->
+    <div class="page-footer fade">
+        This site uses basic analytics to optimize user experience. | © 2026 phytai.com
+    </div>
+
+</div>
+
+<script>
+    clarity('set', 'page_view', 'jobs_hub');
+</script>
+</body>
+</html>
