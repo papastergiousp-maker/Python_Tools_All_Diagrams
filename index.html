@@ -85,6 +85,7 @@
         .powerbi  { background: #f2c811; color: #333; }
         .business-dash { background: linear-gradient(135deg, #6f42c1, #a020f0); grid-column: span 2; font-size: 1.05rem; }
         .cv-page  { background: #1F4E79; grid-column: span 2; }
+        .full-width { grid-column: span 2; }
 
         .cv-label { grid-column: span 2; margin-top: 15px; margin-bottom: 5px; font-weight: 600; color: var(--primary); font-size: 1rem; }
         .footer-note { font-size: 0.7rem; color: #aaa; margin-top: 25px; grid-column: span 2; }
@@ -137,7 +138,8 @@
 
         @media (max-width: 600px) {
             .grid { grid-template-columns: 1fr !important; }
-            .business-dash, .cv-page, .cv-label, .footer-note, hr { grid-column: auto !important; }
+            .business-dash, .cv-page, .full-width,
+            .cv-label, .footer-note, hr { grid-column: auto !important; }
             .fade-item { width: 100% !important; }
             .data-icon { display: none; }
             .card { padding: 25px; }
@@ -185,14 +187,14 @@
 
         <div class="grid">
 
-            <a href="/cv" class="btn cv-page fade-item" style="grid-column: span 2;"
+            <a href="/cv" class="btn cv-page fade-item full-width"
                onclick="clarity('set','btn_click','cv_page')">
                <i class="fas fa-id-card"></i>
                <span class="lang-en">View Full CV</span>
                <span class="lang-gr">Προβολή Βιογραφικού</span>
             </a>
 
-            <a href="https://github.com/papastergiousp-maker/My_Projects" class="btn github fade-item" style="grid-column: span 2;"
+            <a href="https://github.com/papastergiousp-maker/My_Projects" class="btn github fade-item full-width"
                target="_blank" rel="noopener noreferrer"
                onclick="clarity('set','btn_click','github')">
                <i class="fab fa-github"></i> GitHub — All Projects</a>
@@ -232,7 +234,7 @@
                 <span class="lang-gr">Κλήση</span>
             </button>
 
-            <a href="https://www.linkedin.com/in/spyros-papastergiou" class="btn linkedin fade-item" style="grid-column: span 2;" target="_blank" rel="noopener noreferrer"
+            <a href="https://www.linkedin.com/in/spyros-papastergiou" class="btn linkedin fade-item full-width" target="_blank" rel="noopener noreferrer"
                onclick="clarity('set','btn_click','linkedin')">
                <i class="fab fa-linkedin"></i> LinkedIn</a>
 
