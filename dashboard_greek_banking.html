@@ -1,0 +1,911 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<title>Greek Banking Sector Analysis 2022–2024</title>
+<link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;600;700;800&family=DM+Mono:wght@400;500&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet"/>
+<script src="https://cdn.plot.ly/plotly-2.27.0.min.js"></script>
+<style>
+:root {
+  --bg:       #050810;
+  --surface:  #0d1220;
+  --surface2: #141928;
+  --border:   rgba(255,255,255,0.06);
+  --border2:  rgba(255,255,255,0.12);
+  --text:     #e8edf5;
+  --muted:    #5a6580;
+  --dim:      #8892a8;
+
+  --euro:   #3b82f6;
+  --alpha:  #10b981;
+  --pir:    #f59e0b;
+  --nbg:    #a78bfa;
+
+  --up:   #10b981;
+  --down: #ef4444;
+}
+
+*, *::before, *::after { margin:0; padding:0; box-sizing:border-box; }
+
+html { scroll-behavior: smooth; }
+
+body {
+  font-family: 'DM Sans', sans-serif;
+  background: var(--bg);
+  color: var(--text);
+  min-height: 100vh;
+  overflow-x: hidden;
+}
+
+/* GRID NOISE TEXTURE */
+body::before {
+  content: '';
+  position: fixed;
+  inset: 0;
+  background-image:
+    linear-gradient(rgba(59,130,246,0.03) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(59,130,246,0.03) 1px, transparent 1px);
+  background-size: 48px 48px;
+  pointer-events: none;
+  z-index: 0;
+}
+
+/* ── HEADER ── */
+.header {
+  position: sticky; top: 0; z-index: 100;
+  background: rgba(5,8,16,0.85);
+  backdrop-filter: blur(20px);
+  border-bottom: 1px solid var(--border);
+  padding: 0 32px;
+  height: 56px;
+  display: flex; align-items: center; justify-content: space-between;
+}
+
+.header-brand {
+  display: flex; align-items: center; gap: 12px;
+}
+.brand-icon {
+  width: 28px; height: 28px;
+  background: linear-gradient(135deg, var(--euro), #6366f1);
+  border-radius: 6px;
+  display: flex; align-items: center; justify-content: center;
+  font-size: 14px; font-weight: 800; color: white;
+  font-family: 'Syne', sans-serif;
+}
+.brand-text {
+  font-family: 'Syne', sans-serif;
+  font-size: 0.88rem; font-weight: 700;
+  letter-spacing: 0.3px;
+}
+.brand-sub { font-size: 0.7rem; color: var(--muted); font-weight: 400; }
+
+.header-right { display: flex; align-items: center; gap: 16px; }
+
+.year-tabs {
+  display: flex; gap: 2px;
+  background: var(--surface2);
+  border: 1px solid var(--border);
+  border-radius: 8px; padding: 3px;
+}
+.year-tab {
+  padding: 4px 14px; border-radius: 6px;
+  font-size: 0.75rem; font-weight: 700;
+  cursor: pointer; border: none;
+  background: transparent; color: var(--muted);
+  transition: all 0.2s; font-family: 'DM Sans', sans-serif;
+}
+.year-tab.active { background: var(--euro); color: white; }
+.year-tab:hover:not(.active) { color: var(--text); }
+
+.live-pill {
+  display: flex; align-items: center; gap: 5px;
+  font-size: 0.68rem; font-weight: 700; letter-spacing: 0.8px;
+  color: var(--up);
+  background: rgba(16,185,129,0.08);
+  border: 1px solid rgba(16,185,129,0.2);
+  border-radius: 20px; padding: 4px 10px;
+}
+.live-dot {
+  width: 5px; height: 5px; border-radius: 50%;
+  background: var(--up);
+  animation: pulse 2s infinite;
+}
+@keyframes pulse {
+  0%,100% { opacity:1; box-shadow: 0 0 0 0 rgba(16,185,129,0.4); }
+  50%      { opacity:.7; box-shadow: 0 0 0 5px rgba(16,185,129,0); }
+}
+
+/* ── MAIN ── */
+.main { padding: 24px 32px 48px; position: relative; z-index: 1; max-width: 1400px; margin: 0 auto; }
+
+/* ── HERO STRIP ── */
+.hero {
+  margin-bottom: 24px;
+  padding: 28px 32px;
+  background: linear-gradient(135deg, rgba(59,130,246,0.08) 0%, rgba(99,102,241,0.05) 100%);
+  border: 1px solid rgba(59,130,246,0.15);
+  border-radius: 16px;
+  display: flex; align-items: center; justify-content: space-between; flex-wrap: wrap; gap: 16px;
+}
+.hero-title {
+  font-family: 'Syne', sans-serif;
+  font-size: 1.5rem; font-weight: 800;
+  line-height: 1.2;
+}
+.hero-title span { color: var(--euro); }
+.hero-meta { font-size: 0.78rem; color: var(--dim); margin-top: 6px; }
+.hero-badges { display: flex; gap: 8px; flex-wrap: wrap; }
+.badge {
+  font-size: 0.68rem; font-weight: 700; letter-spacing: 0.5px;
+  padding: 4px 10px; border-radius: 20px;
+  border: 1px solid;
+}
+.badge-blue   { color: var(--euro);  border-color: rgba(59,130,246,0.3);  background: rgba(59,130,246,0.08); }
+.badge-green  { color: var(--up);    border-color: rgba(16,185,129,0.3);  background: rgba(16,185,129,0.08); }
+.badge-amber  { color: #f59e0b;      border-color: rgba(245,158,11,0.3);  background: rgba(245,158,11,0.08); }
+.badge-purple { color: #a78bfa;      border-color: rgba(167,139,250,0.3); background: rgba(167,139,250,0.08); }
+
+/* ── KPI CARDS ── */
+.kpi-grid {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 12px;
+  margin-bottom: 20px;
+}
+
+.kpi-card {
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: 14px;
+  padding: 18px 20px 16px;
+  position: relative; overflow: hidden;
+  cursor: pointer;
+  transition: border-color 0.2s, transform 0.2s;
+}
+.kpi-card::after {
+  content: '';
+  position: absolute; top: 0; left: 0; right: 0; height: 2px;
+  border-radius: 14px 14px 0 0;
+}
+.kpi-card.euro::after  { background: var(--euro); }
+.kpi-card.alpha::after { background: var(--alpha); }
+.kpi-card.pir::after   { background: var(--pir); }
+.kpi-card.nbg::after   { background: var(--nbg); }
+
+.kpi-card:hover { transform: translateY(-2px); border-color: var(--border2); }
+
+.kpi-bank {
+  font-size: 0.65rem; font-weight: 700;
+  text-transform: uppercase; letter-spacing: 1.2px;
+  margin-bottom: 12px;
+}
+.kpi-card.euro  .kpi-bank { color: var(--euro); }
+.kpi-card.alpha .kpi-bank { color: var(--alpha); }
+.kpi-card.pir   .kpi-bank { color: var(--pir); }
+.kpi-card.nbg   .kpi-bank { color: var(--nbg); }
+
+.kpi-metrics { display: grid; grid-template-columns: 1fr 1fr; gap: 10px 8px; }
+
+.kpi-item-label {
+  font-size: 0.62rem; color: var(--muted);
+  text-transform: uppercase; letter-spacing: 0.5px;
+  margin-bottom: 2px;
+}
+.kpi-item-value {
+  font-family: 'DM Mono', monospace;
+  font-size: 1.05rem; font-weight: 500;
+  color: var(--text);
+}
+.kpi-item-value.highlight {
+  font-size: 1.25rem; font-weight: 500;
+}
+.kpi-change {
+  font-size: 0.65rem; font-weight: 700;
+  margin-top: 1px;
+}
+.kpi-change.up   { color: var(--up); }
+.kpi-change.down { color: var(--down); }
+
+/* ── CHART GRID ── */
+.charts-main {
+  display: grid;
+  grid-template-columns: 2fr 1fr;
+  gap: 12px;
+  margin-bottom: 12px;
+}
+.charts-row {
+  display: grid;
+  grid-template-columns: 1fr 1fr 1fr;
+  gap: 12px;
+  margin-bottom: 12px;
+}
+.charts-bottom {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 12px;
+}
+
+.chart-card {
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: 14px;
+  padding: 20px 22px;
+  transition: border-color 0.2s;
+}
+.chart-card:hover { border-color: var(--border2); }
+
+.chart-header {
+  display: flex; justify-content: space-between;
+  align-items: flex-start; margin-bottom: 14px;
+}
+.chart-title {
+  font-family: 'Syne', sans-serif;
+  font-size: 0.82rem; font-weight: 700;
+  color: var(--text); margin-bottom: 2px;
+}
+.chart-subtitle { font-size: 0.68rem; color: var(--muted); }
+.chart-tag {
+  font-size: 0.62rem; font-weight: 700; letter-spacing: 0.5px;
+  padding: 3px 8px; border-radius: 20px;
+  background: rgba(59,130,246,0.1);
+  color: var(--euro);
+  border: 1px solid rgba(59,130,246,0.2);
+  white-space: nowrap;
+}
+
+/* ── INSIGHT STRIP ── */
+.insights {
+  display: grid; grid-template-columns: repeat(4,1fr);
+  gap: 10px; margin-bottom: 12px;
+}
+.insight-card {
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: 12px;
+  padding: 14px 16px;
+  display: flex; align-items: flex-start; gap: 10px;
+}
+.insight-icon {
+  width: 32px; height: 32px; border-radius: 8px;
+  display: flex; align-items: center; justify-content: center;
+  font-size: 14px; flex-shrink: 0;
+}
+.insight-icon.blue   { background: rgba(59,130,246,0.15); }
+.insight-icon.green  { background: rgba(16,185,129,0.15); }
+.insight-icon.amber  { background: rgba(245,158,11,0.15); }
+.insight-icon.purple { background: rgba(167,139,250,0.15); }
+.insight-title  { font-size: 0.7rem; font-weight: 700; margin-bottom: 2px; }
+.insight-body   { font-size: 0.65rem; color: var(--dim); line-height: 1.5; }
+
+/* ── RANKING TABLE ── */
+.rank-table { width: 100%; border-collapse: collapse; }
+.rank-table th {
+  font-size: 0.62rem; font-weight: 700;
+  text-transform: uppercase; letter-spacing: 0.8px;
+  color: var(--muted); padding: 0 8px 10px 0;
+  text-align: left; border-bottom: 1px solid var(--border);
+}
+.rank-table td {
+  padding: 10px 8px 10px 0;
+  font-size: 0.78rem;
+  border-bottom: 1px solid rgba(255,255,255,0.03);
+  vertical-align: middle;
+}
+.rank-table tr:last-child td { border-bottom: none; }
+.rank-table tr:hover td { background: rgba(255,255,255,0.015); }
+
+.bank-dot {
+  display: inline-block; width: 8px; height: 8px;
+  border-radius: 50%; margin-right: 7px;
+}
+.mini-bar-bg {
+  background: rgba(255,255,255,0.06);
+  border-radius: 4px; height: 5px; width: 80px;
+}
+.mini-bar-fill { height: 100%; border-radius: 4px; }
+
+/* ── FOOTER ── */
+.footer {
+  text-align: center; padding: 20px 32px;
+  font-size: 0.68rem; color: var(--muted);
+  border-top: 1px solid var(--border);
+  position: relative; z-index: 1;
+}
+.footer a { color: var(--euro); text-decoration: none; }
+
+/* ── ANIMATIONS ── */
+@keyframes fadeUp {
+  from { opacity:0; transform:translateY(16px); }
+  to   { opacity:1; transform:translateY(0); }
+}
+.kpi-card  { animation: fadeUp 0.4s ease both; }
+.kpi-card:nth-child(1) { animation-delay:.05s; }
+.kpi-card:nth-child(2) { animation-delay:.10s; }
+.kpi-card:nth-child(3) { animation-delay:.15s; }
+.kpi-card:nth-child(4) { animation-delay:.20s; }
+
+/* ── RESPONSIVE ── */
+@media(max-width:1100px) {
+  .kpi-grid      { grid-template-columns: 1fr 1fr; }
+  .charts-main   { grid-template-columns: 1fr; }
+  .charts-row    { grid-template-columns: 1fr 1fr; }
+  .insights      { grid-template-columns: 1fr 1fr; }
+}
+@media(max-width:700px) {
+  .main          { padding: 16px; }
+  .header        { padding: 0 16px; }
+  .kpi-grid      { grid-template-columns: 1fr; }
+  .charts-row    { grid-template-columns: 1fr; }
+  .charts-bottom { grid-template-columns: 1fr; }
+  .insights      { grid-template-columns: 1fr; }
+}
+</style>
+</head>
+<body>
+
+<!-- HEADER -->
+<header class="header">
+  <div class="header-brand">
+    <div class="brand-icon">G</div>
+    <div>
+      <div class="brand-text">Greek Banking Sector Analysis</div>
+      <div class="brand-sub">Eurobank · Alpha Bank · Piraeus · NBG</div>
+    </div>
+  </div>
+  <div class="header-right">
+    <div class="year-tabs">
+      <button class="year-tab" onclick="setYear(2022)">2022</button>
+      <button class="year-tab" onclick="setYear(2023)">2023</button>
+      <button class="year-tab active" onclick="setYear(2024)">2024</button>
+    </div>
+    <div class="live-pill"><div class="live-dot"></div>REAL DATA</div>
+  </div>
+</header>
+
+<div class="main">
+
+  <!-- HERO -->
+  <div class="hero">
+    <div>
+      <div class="hero-title">Greek Banking Sector <span>2022–2024</span></div>
+      <div class="hero-meta">Extracted from official Annual Reports · Python · SQL · Plotly · 4 Systemic Banks · 12 KPIs</div>
+    </div>
+    <div class="hero-badges">
+      <span class="badge badge-blue">PDF Extraction</span>
+      <span class="badge badge-green">ETL Pipeline</span>
+      <span class="badge badge-amber">SQLite Database</span>
+      <span class="badge badge-purple">Window Functions</span>
+    </div>
+  </div>
+
+  <!-- KPI CARDS -->
+  <div class="kpi-grid">
+    <div class="kpi-card euro">
+      <div class="kpi-bank">Eurobank</div>
+      <div class="kpi-metrics">
+        <div>
+          <div class="kpi-item-label">NII</div>
+          <div class="kpi-item-value highlight" id="euro-nii">€2,504m</div>
+          <div class="kpi-change up" id="euro-nii-yoy">↑ 15.2% YoY</div>
+        </div>
+        <div>
+          <div class="kpi-item-label">Net Profit</div>
+          <div class="kpi-item-value highlight" id="euro-profit">€1,458m</div>
+          <div class="kpi-change up" id="euro-profit-yoy">↑ 27.0% YoY</div>
+        </div>
+        <div>
+          <div class="kpi-item-label">ROE</div>
+          <div class="kpi-item-value" id="euro-roe">16.9%</div>
+        </div>
+        <div>
+          <div class="kpi-item-label">Cost/Income</div>
+          <div class="kpi-item-value" id="euro-ci">33.0%</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="kpi-card alpha">
+      <div class="kpi-bank">Alpha Bank</div>
+      <div class="kpi-metrics">
+        <div>
+          <div class="kpi-item-label">NII</div>
+          <div class="kpi-item-value highlight" id="alpha-nii">€1,646m</div>
+          <div class="kpi-change down" id="alpha-nii-yoy">↓ 0.3% YoY</div>
+        </div>
+        <div>
+          <div class="kpi-item-label">Net Profit</div>
+          <div class="kpi-item-value highlight" id="alpha-profit">€668m</div>
+          <div class="kpi-change up" id="alpha-profit-yoy">↑ 2.0% YoY</div>
+        </div>
+        <div>
+          <div class="kpi-item-label">ROE</div>
+          <div class="kpi-item-value" id="alpha-roe">8.2%</div>
+        </div>
+        <div>
+          <div class="kpi-item-label">Cost/Income</div>
+          <div class="kpi-item-value" id="alpha-ci">37.7%</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="kpi-card pir">
+      <div class="kpi-bank">Piraeus Bank</div>
+      <div class="kpi-metrics">
+        <div>
+          <div class="kpi-item-label">NII</div>
+          <div class="kpi-item-value highlight" id="pir-nii">€2,088m</div>
+          <div class="kpi-change up" id="pir-nii-yoy">↑ 4.2% YoY</div>
+        </div>
+        <div>
+          <div class="kpi-item-label">Net Profit</div>
+          <div class="kpi-item-value highlight" id="pir-profit">€1,066m</div>
+          <div class="kpi-change up" id="pir-profit-yoy">↑ 35.3% YoY</div>
+        </div>
+        <div>
+          <div class="kpi-item-label">ROE</div>
+          <div class="kpi-item-value" id="pir-roe">12.9%</div>
+        </div>
+        <div>
+          <div class="kpi-item-label">Cost/Income</div>
+          <div class="kpi-item-value" id="pir-ci">31.8%</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="kpi-card nbg">
+      <div class="kpi-bank">NBG</div>
+      <div class="kpi-metrics">
+        <div>
+          <div class="kpi-item-label">NII</div>
+          <div class="kpi-item-value highlight" id="nbg-nii">€2,356m</div>
+          <div class="kpi-change up" id="nbg-nii-yoy">↑ 4.1% YoY</div>
+        </div>
+        <div>
+          <div class="kpi-item-label">Net Profit</div>
+          <div class="kpi-item-value highlight" id="nbg-profit">€1,158m</div>
+          <div class="kpi-change up" id="nbg-profit-yoy">↑ 4.7% YoY</div>
+        </div>
+        <div>
+          <div class="kpi-item-label">ROE</div>
+          <div class="kpi-item-value" id="nbg-roe">13.7%</div>
+        </div>
+        <div>
+          <div class="kpi-item-label">Cost/Income</div>
+          <div class="kpi-item-value" id="nbg-ci">20.1%</div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- KEY INSIGHTS -->
+  <div class="insights">
+    <div class="insight-card">
+      <div class="insight-icon blue">🏆</div>
+      <div>
+        <div class="insight-title">Sector NII +82% in 2 Years</div>
+        <div class="insight-body">Combined NII grew from €5.5bn (2022) to €10.0bn (2024), driven by ECB rate hikes and loan growth.</div>
+      </div>
+    </div>
+    <div class="insight-card">
+      <div class="insight-icon green">⚡</div>
+      <div>
+        <div class="insight-title">NBG Best Efficiency in Europe</div>
+        <div class="insight-body">Cost-to-Income of 20.1% is among the lowest of any European bank — well below the 40% sector average.</div>
+      </div>
+    </div>
+    <div class="insight-card">
+      <div class="insight-icon amber">📈</div>
+      <div>
+        <div class="insight-title">Eurobank Largest by Assets</div>
+        <div class="insight-body">Total assets surpassed €101bn in 2024, up 26.7% YoY — driven by acquisition and loan book expansion.</div>
+      </div>
+    </div>
+    <div class="insight-card">
+      <div class="insight-icon purple">💰</div>
+      <div>
+        <div class="insight-title">Sector ROE Above EU Average</div>
+        <div class="insight-body">All 4 banks exceeded 8% ROE in 2024. Eurobank leads at 16.9%, vs the European banking average of ~12%.</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- CHARTS ROW 1 -->
+  <div class="charts-main">
+
+    <!-- NII Trend -->
+    <div class="chart-card">
+      <div class="chart-header">
+        <div>
+          <div class="chart-title">Net Interest Income — 3-Year Trend</div>
+          <div class="chart-subtitle">€ millions · All 4 systemic banks · 2022–2024</div>
+        </div>
+        <span class="chart-tag">NII +82% sector</span>
+      </div>
+      <div id="chart-nii" style="height:260px;"></div>
+    </div>
+
+    <!-- Market Share -->
+    <div class="chart-card">
+      <div class="chart-header">
+        <div>
+          <div class="chart-title">Market Share 2024</div>
+          <div class="chart-subtitle">By total assets</div>
+        </div>
+        <span class="chart-tag">€331bn total</span>
+      </div>
+      <div id="chart-share" style="height:260px;"></div>
+    </div>
+
+  </div>
+
+  <!-- CHARTS ROW 2 -->
+  <div class="charts-row">
+
+    <!-- ROE -->
+    <div class="chart-card">
+      <div class="chart-header">
+        <div>
+          <div class="chart-title">Return on Equity</div>
+          <div class="chart-subtitle">ROE % · 2022–2024</div>
+        </div>
+      </div>
+      <div id="chart-roe" style="height:210px;"></div>
+    </div>
+
+    <!-- Cost-to-Income -->
+    <div class="chart-card">
+      <div class="chart-header">
+        <div>
+          <div class="chart-title">Cost-to-Income Ratio</div>
+          <div class="chart-subtitle">Efficiency · lower = better</div>
+        </div>
+        <span class="chart-tag">NBG #1</span>
+      </div>
+      <div id="chart-ci" style="height:210px;"></div>
+    </div>
+
+    <!-- Net Profit -->
+    <div class="chart-card">
+      <div class="chart-header">
+        <div>
+          <div class="chart-title">Net Profit</div>
+          <div class="chart-subtitle">€ millions · 2022–2024</div>
+        </div>
+      </div>
+      <div id="chart-profit" style="height:210px;"></div>
+    </div>
+
+  </div>
+
+  <!-- CHARTS ROW 3 -->
+  <div class="charts-bottom">
+
+    <!-- Loans vs Deposits -->
+    <div class="chart-card">
+      <div class="chart-header">
+        <div>
+          <div class="chart-title">Loan-to-Deposit Ratio 2024</div>
+          <div class="chart-subtitle">Liquidity health · threshold: 80%</div>
+        </div>
+        <span class="chart-tag">All below 80%</span>
+      </div>
+      <div id="chart-ld" style="height:220px;"></div>
+    </div>
+
+    <!-- Rankings Table -->
+    <div class="chart-card">
+      <div class="chart-header">
+        <div>
+          <div class="chart-title">KPI Rankings 2024</div>
+          <div class="chart-subtitle">Comparative sector scorecard</div>
+        </div>
+      </div>
+      <table class="rank-table">
+        <thead>
+          <tr>
+            <th>Bank</th>
+            <th>NII (€m)</th>
+            <th>ROE %</th>
+            <th>C/I %</th>
+            <th>NIM %</th>
+            <th>Assets (€bn)</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td><span class="bank-dot" style="background:var(--euro)"></span>Eurobank</td>
+            <td><strong>2,504</strong></td>
+            <td>16.9</td>
+            <td>33.0</td>
+            <td>2.48</td>
+            <td>101.2</td>
+          </tr>
+          <tr>
+            <td><span class="bank-dot" style="background:var(--nbg)"></span>NBG</td>
+            <td>2,356</td>
+            <td>13.7</td>
+            <td><strong style="color:var(--up)">20.1</strong></td>
+            <td><strong style="color:var(--up)">3.14</strong></td>
+            <td>75.0</td>
+          </tr>
+          <tr>
+            <td><span class="bank-dot" style="background:var(--pir)"></span>Piraeus</td>
+            <td>2,088</td>
+            <td>12.9</td>
+            <td>31.8</td>
+            <td>2.61</td>
+            <td>80.0</td>
+          </tr>
+          <tr>
+            <td><span class="bank-dot" style="background:var(--alpha)"></span>Alpha Bank</td>
+            <td>1,646</td>
+            <td>8.2</td>
+            <td>37.7</td>
+            <td>2.32</td>
+            <td>71.0</td>
+          </tr>
+        </tbody>
+      </table>
+      <div style="margin-top:16px;">
+        <div style="font-size:0.62rem;color:var(--muted);margin-bottom:8px;">Net Interest Margin comparison</div>
+        <div style="display:flex;flex-direction:column;gap:6px;">
+          <div style="display:flex;align-items:center;gap:8px;">
+            <div style="font-size:0.7rem;width:80px;color:var(--dim)">NBG</div>
+            <div class="mini-bar-bg" style="flex:1"><div class="mini-bar-fill" style="width:100%;background:var(--nbg)"></div></div>
+            <div style="font-size:0.7rem;font-family:'DM Mono',monospace;color:var(--nbg)">3.14%</div>
+          </div>
+          <div style="display:flex;align-items:center;gap:8px;">
+            <div style="font-size:0.7rem;width:80px;color:var(--dim)">Piraeus</div>
+            <div class="mini-bar-bg" style="flex:1"><div class="mini-bar-fill" style="width:83%;background:var(--pir)"></div></div>
+            <div style="font-size:0.7rem;font-family:'DM Mono',monospace;color:var(--pir)">2.61%</div>
+          </div>
+          <div style="display:flex;align-items:center;gap:8px;">
+            <div style="font-size:0.7rem;width:80px;color:var(--dim)">Eurobank</div>
+            <div class="mini-bar-bg" style="flex:1"><div class="mini-bar-fill" style="width:79%;background:var(--euro)"></div></div>
+            <div style="font-size:0.7rem;font-family:'DM Mono',monospace;color:var(--euro)">2.48%</div>
+          </div>
+          <div style="display:flex;align-items:center;gap:8px;">
+            <div style="font-size:0.7rem;width:80px;color:var(--dim)">Alpha</div>
+            <div class="mini-bar-bg" style="flex:1"><div class="mini-bar-fill" style="width:74%;background:var(--alpha)"></div></div>
+            <div style="font-size:0.7rem;font-family:'DM Mono',monospace;color:var(--alpha)">2.32%</div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+  </div>
+
+</div>
+
+<footer class="footer">
+  Greek Banking Sector Analysis 2022–2024 · Built with Python · pdfplumber · SQLite · Plotly ·
+  Data from official Annual Reports · <a href="https://phytai.com" target="_blank">phytai.com</a> ·
+  <a href="https://github.com/papastergiousp-maker" target="_blank">GitHub</a> ·
+  © 2024 Spyros Papastergiou
+</footer>
+
+<script>
+// ── DATA ──────────────────────────────────────────────────────────────────────
+const DATA = {
+  banks:  ['Eurobank','Alpha Bank','Piraeus Bank','NBG'],
+  colors: ['#3b82f6','#10b981','#f59e0b','#a78bfa'],
+  years:  [2022, 2023, 2024],
+
+  nii:    [[1456,2174,2504],[1306.7,1651.5,1646],[1304,2003,2088],[1369,2263,2356]],
+  profit: [[1353,1148,1458],[342.2,655,668],[864,788,1066],[892,1106,1158]],
+  roe:    [[19.2,15.7,16.9],[5.5,9.0,8.2],[13.3,10.7,12.9],[13.0,15.2,13.7]],
+  ci:     [[46.8,38.2,33.0],[51.5,37.2,37.7],[34.5,33.1,31.8],[20.2,17.6,20.1]],
+  assets: [[81471,79815,101151],[77200,72694,70954],[75403,76450,80044],[78113,74584,74957]],
+  ld:     [[75.2,72.4,68.3],[77.1,74.6,76.5],[64.0,63.0,64.7],[64.4,59.9,62.7]],
+  nim:    [[1.79,2.72,2.48],[1.69,2.27,2.32],[1.73,2.62,2.61],[1.75,3.03,3.14]],
+};
+
+const PLOT_CFG = { responsive:true, displayModeBar:false };
+
+const DARK = {
+  paper_bgcolor:'transparent', plot_bgcolor:'transparent',
+  font:{ family:'DM Sans, sans-serif', color:'#5a6580', size:11 },
+  margin:{ l:42, r:8, t:8, b:30 },
+  xaxis:{ gridcolor:'rgba(255,255,255,0.04)', zeroline:false, showline:false },
+  yaxis:{ gridcolor:'rgba(255,255,255,0.04)', zeroline:false, showline:false },
+  showlegend:false,
+};
+
+const LEGEND_DARK = {
+  ...DARK,
+  showlegend:true,
+  legend:{ orientation:'h', x:0, y:-0.18, font:{ size:10, color:'#8892a8' } },
+};
+
+// ── NII TREND ─────────────────────────────────────────────────────────────────
+Plotly.newPlot('chart-nii',
+  DATA.banks.map((b,i) => ({
+    x: DATA.years, y: DATA.nii[i],
+    name: b, type:'scatter', mode:'lines+markers',
+    line:{ color:DATA.colors[i], width:2.5, shape:'spline' },
+    marker:{ color:DATA.colors[i], size:6 },
+    hovertemplate:`<b>${b}</b><br>NII: €%{y:.0f}m<extra></extra>`
+  })),
+  { ...LEGEND_DARK,
+    margin:{ l:42, r:8, t:8, b:50 },
+    yaxis:{ ...DARK.yaxis, tickprefix:'€', ticksuffix:'m', gridcolor:'rgba(255,255,255,0.04)' }
+  }, PLOT_CFG
+);
+
+// ── MARKET SHARE DONUT ────────────────────────────────────────────────────────
+const assets2024 = DATA.assets.map(a => a[2]);
+Plotly.newPlot('chart-share', [{
+  values: assets2024,
+  labels: DATA.banks,
+  type:'pie', hole:0.60,
+  marker:{ colors:DATA.colors },
+  textinfo:'none',
+  hovertemplate:'<b>%{label}</b><br>€%{value:.0f}m<br>%{percent}<extra></extra>'
+}], {
+  ...DARK,
+  margin:{ l:10, r:10, t:8, b:10 },
+  showlegend:true,
+  legend:{ font:{ size:10, color:'#8892a8' }, x:0.62, y:0.5, xanchor:'left', yanchor:'middle' },
+  annotations:[{
+    text:'€331bn', x:0.37, y:0.54,
+    font:{ size:15, color:'#e8edf5', family:'DM Mono' },
+    showarrow:false, xanchor:'center'
+  },{
+    text:'Total', x:0.37, y:0.42,
+    font:{ size:10, color:'#5a6580' },
+    showarrow:false, xanchor:'center'
+  }]
+}, PLOT_CFG);
+
+// ── ROE ───────────────────────────────────────────────────────────────────────
+Plotly.newPlot('chart-roe',
+  DATA.banks.map((b,i) => ({
+    x: DATA.years, y: DATA.roe[i],
+    name:b, type:'bar',
+    marker:{ color:DATA.colors[i], opacity:0.85 },
+    hovertemplate:`<b>${b}</b><br>ROE: %{y:.1f}%<extra></extra>`
+  })),
+  { ...LEGEND_DARK, barmode:'group', bargap:0.2, bargroupgap:0.08,
+    margin:{ l:42, r:8, t:8, b:50 },
+    yaxis:{ ...DARK.yaxis, ticksuffix:'%', gridcolor:'rgba(255,255,255,0.04)' }
+  }, PLOT_CFG
+);
+
+// ── COST-TO-INCOME ────────────────────────────────────────────────────────────
+Plotly.newPlot('chart-ci',
+  DATA.banks.map((b,i) => ({
+    x: DATA.years, y: DATA.ci[i],
+    name:b, type:'scatter', mode:'lines+markers',
+    line:{ color:DATA.colors[i], width:2.5 },
+    marker:{ color:DATA.colors[i], size:6 },
+    hovertemplate:`<b>${b}</b><br>C/I: %{y:.1f}%<extra></extra>`
+  })),
+  { ...LEGEND_DARK,
+    margin:{ l:42, r:8, t:8, b:50 },
+    yaxis:{ ...DARK.yaxis, ticksuffix:'%', gridcolor:'rgba(255,255,255,0.04)', autorange:'reversed' },
+    shapes:[{
+      type:'line', x0:2021.8, x1:2024.2, y0:40, y1:40,
+      line:{ color:'rgba(239,68,68,0.3)', width:1.5, dash:'dot' }
+    }],
+    annotations:[{
+      x:2022, y:40, text:'EU avg ~40%',
+      font:{ size:9, color:'#ef4444' }, showarrow:false, yshift:8
+    }]
+  }, PLOT_CFG
+);
+
+// ── NET PROFIT ────────────────────────────────────────────────────────────────
+Plotly.newPlot('chart-profit',
+  DATA.banks.map((b,i) => ({
+    x: DATA.years, y: DATA.profit[i],
+    name:b, type:'bar',
+    marker:{ color:DATA.colors[i], opacity:0.85 },
+    hovertemplate:`<b>${b}</b><br>Profit: €%{y:.0f}m<extra></extra>`
+  })),
+  { ...LEGEND_DARK, barmode:'group', bargap:0.2, bargroupgap:0.08,
+    margin:{ l:42, r:8, t:8, b:50 },
+    yaxis:{ ...DARK.yaxis, tickprefix:'€', ticksuffix:'m', gridcolor:'rgba(255,255,255,0.04)' }
+  }, PLOT_CFG
+);
+
+// ── LOAN-TO-DEPOSIT ───────────────────────────────────────────────────────────
+const banks2024  = DATA.banks;
+const ld2024     = DATA.ld.map(a => a[2]);
+Plotly.newPlot('chart-ld', [{
+  x: ld2024, y: banks2024,
+  type:'bar', orientation:'h',
+  marker:{ color:DATA.colors },
+  hovertemplate:'<b>%{y}</b><br>L/D: %{x:.1f}%<extra></extra>',
+  text: ld2024.map(v => v.toFixed(1)+'%'),
+  textposition:'outside',
+  textfont:{ size:11, color:'#8892a8' },
+}],{
+  ...DARK,
+  margin:{ l:90, r:50, t:8, b:30 },
+  xaxis:{ ...DARK.xaxis, ticksuffix:'%', range:[0,95] },
+  yaxis:{ ...DARK.yaxis, gridcolor:'transparent' },
+  shapes:[{
+    type:'line', x0:80, x1:80, y0:-0.5, y1:3.5,
+    line:{ color:'rgba(239,68,68,0.4)', width:1.5, dash:'dot' }
+  }],
+  annotations:[{
+    x:80, y:3.6, text:'80% threshold',
+    font:{ size:9, color:'#ef4444' }, showarrow:false
+  }]
+}, PLOT_CFG);
+
+// ── YEAR FILTER ───────────────────────────────────────────────────────────────
+const KPI_DATA = {
+  2022: {
+    euro:  { nii:'€1,456m', profit:'€1,353m', roe:'19.2%', ci:'46.8%', niiYoy:'—',        profitYoy:'—' },
+    alpha: { nii:'€1,307m', profit:'€342m',   roe:'5.5%',  ci:'51.5%', niiYoy:'—',        profitYoy:'—' },
+    pir:   { nii:'€1,304m', profit:'€864m',   roe:'13.3%', ci:'34.5%', niiYoy:'—',        profitYoy:'—' },
+    nbg:   { nii:'€1,369m', profit:'€892m',   roe:'13.0%', ci:'20.2%', niiYoy:'—',        profitYoy:'—' },
+  },
+  2023: {
+    euro:  { nii:'€2,174m', profit:'€1,148m', roe:'15.7%', ci:'38.2%', niiYoy:'↑ 49.3%', profitYoy:'↓ 15.2%' },
+    alpha: { nii:'€1,652m', profit:'€655m',   roe:'9.0%',  ci:'37.2%', niiYoy:'↑ 26.4%', profitYoy:'↑ 91.4%' },
+    pir:   { nii:'€2,003m', profit:'€788m',   roe:'10.7%', ci:'33.1%', niiYoy:'↑ 53.6%', profitYoy:'↓ 8.8%'  },
+    nbg:   { nii:'€2,263m', profit:'€1,106m', roe:'15.2%', ci:'17.6%', niiYoy:'↑ 65.3%', profitYoy:'↑ 23.8%' },
+  },
+  2024: {
+    euro:  { nii:'€2,504m', profit:'€1,458m', roe:'16.9%', ci:'33.0%', niiYoy:'↑ 15.2%', profitYoy:'↑ 27.0%' },
+    alpha: { nii:'€1,646m', profit:'€668m',   roe:'8.2%',  ci:'37.7%', niiYoy:'↓ 0.3%',  profitYoy:'↑ 2.0%'  },
+    pir:   { nii:'€2,088m', profit:'€1,066m', roe:'12.9%', ci:'31.8%', niiYoy:'↑ 4.2%',  profitYoy:'↑ 35.3%' },
+    nbg:   { nii:'€2,356m', profit:'€1,158m', roe:'13.7%', ci:'20.1%', niiYoy:'↑ 4.1%',  profitYoy:'↑ 4.7%'  },
+  }
+};
+
+function setYear(y) {
+  document.querySelectorAll('.year-tab').forEach(b => {
+    b.classList.toggle('active', parseInt(b.textContent) === y);
+  });
+
+  const d = KPI_DATA[y];
+
+  function updateCard(prefix, data) {
+    const setEl = (id, val) => { const el=document.getElementById(id); if(el) el.textContent=val; };
+    const setChange = (id, val) => {
+      const el = document.getElementById(id); if(!el) return;
+      el.textContent = val;
+      el.className = 'kpi-change ' + (val.startsWith('↑') ? 'up' : val.startsWith('↓') ? 'down' : '');
+    };
+    setEl(`${prefix}-nii`, data.nii);
+    setEl(`${prefix}-profit`, data.profit);
+    setEl(`${prefix}-roe`, data.roe);
+    setEl(`${prefix}-ci`, data.ci);
+    setChange(`${prefix}-nii-yoy`, data.niiYoy);
+    setChange(`${prefix}-profit-yoy`, data.profitYoy);
+  }
+
+  updateCard('euro',  d.euro);
+  updateCard('alpha', d.alpha);
+  updateCard('pir',   d.pir);
+  updateCard('nbg',   d.nbg);
+
+  // Update L/D chart
+  const yi = DATA.years.indexOf(y);
+  const ldVals = DATA.ld.map(a => a[yi]);
+  Plotly.react('chart-ld', [{
+    x: ldVals, y: DATA.banks,
+    type:'bar', orientation:'h',
+    marker:{ color:DATA.colors },
+    hovertemplate:'<b>%{y}</b><br>L/D: %{x:.1f}%<extra></extra>',
+    text: ldVals.map(v => v.toFixed(1)+'%'),
+    textposition:'outside',
+    textfont:{ size:11, color:'#8892a8' },
+  }],{
+    ...DARK,
+    margin:{ l:90, r:50, t:8, b:30 },
+    xaxis:{ ...DARK.xaxis, ticksuffix:'%', range:[0,95] },
+    yaxis:{ ...DARK.yaxis, gridcolor:'transparent' },
+    shapes:[{ type:'line', x0:80, x1:80, y0:-0.5, y1:3.5,
+      line:{ color:'rgba(239,68,68,0.4)', width:1.5, dash:'dot' } }],
+    annotations:[{ x:80, y:3.6, text:'80% threshold',
+      font:{ size:9, color:'#ef4444' }, showarrow:false }]
+  }, PLOT_CFG);
+}
+</script>
+</body>
+</html>
