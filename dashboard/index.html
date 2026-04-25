@@ -377,7 +377,7 @@ async function init() {
 
     setProgress(85, 'Running SQL queries...');
     // Load all rows once — cache them
-    const result = DB.exec('SELECT bank, year, nii, net_profit, roe, cost_to_income AS ci, loan_to_deposit AS ld, nim, total_assets, nii_yoy, profit_yoy FROM kpis ORDER BY bank, year');
+    const result = DB.exec('SELECT bank, year, nii, net_profit, roe, cost_to_income, loan_to_deposit, nim, total_assets, nii_yoy, profit_yoy FROM kpis ORDER BY bank, year');
     const cols = result[0].columns;
     ALL_ROWS = result[0].values.map(row => {
       const obj = {};
@@ -477,7 +477,7 @@ function renderStaticCharts() {
   // Cost-to-Income — SELECT bank, year, cost_to_income FROM kpis
   Plotly.newPlot('chart-ci',
     BANKS.map((b,i) => ({
-      x:YEARS, y:YEARS.map(y=>getVal(b,y,'ci')),
+      x:YEARS, y:YEARS.map(y=>getVal(b,y,'cost_to_income')),
       name:b, type:'scatter', mode:'lines+markers',
       line:{ color:COLORS[i], width:2.5 },
       marker:{ color:COLORS[i], size:6 },
@@ -544,7 +544,7 @@ function setYear(y) {
 
   // Live SQL query for this year
   const rows = query(
-    'SELECT bank, nii, net_profit, roe, ci, ld, nim, total_assets, nii_yoy, profit_yoy FROM kpis WHERE year=? ORDER BY nii DESC',
+    'SELECT bank, nii, net_profit, roe, cost_to_income, loan_to_deposit, nim, total_assets, nii_yoy, profit_yoy FROM kpis WHERE year=? ORDER BY nii DESC',
     [y]
   );
 
@@ -565,19 +565,19 @@ function setYear(y) {
     setEl(`${prefix}-nii`,    fmtM(row.nii));
     setEl(`${prefix}-profit`, fmtM(row.net_profit));
     setEl(`${prefix}-roe`,    fmtPct(row.roe));
-    setEl(`${prefix}-ci`,     fmtPct(row.ci));
+    setEl(`${prefix}-ci`,     fmtPct(row.cost_to_income));
     setChg(`${prefix}-nii-yoy`,    row.nii_yoy);
     setChg(`${prefix}-profit-yoy`, row.profit_yoy);
   });
 
   // L/D chart — live query
-  const ldRows = query('SELECT bank, loan_to_deposit AS ld FROM kpis WHERE year=? ORDER BY loan_to_deposit DESC', [y]);
+  const ldRows = query('SELECT bank, loan_to_deposit FROM kpis WHERE year=? ORDER BY loan_to_deposit DESC', [y]);
   Plotly.react('chart-ld', [{
-    x: ldRows.map(r=>r.ld),
+    x: ldRows.map(r=>r.loan_to_deposit),
     y: ldRows.map(r=>r.bank),
     type:'bar', orientation:'h',
     marker:{ color: ldRows.map(r=>COLORS[BANKS.indexOf(r.bank)]) },
-    text: ldRows.map(r=>r.ld.toFixed(1)+'%'),
+    text: ldRows.map(r=>r.loan_to_deposit.toFixed(1)+'%'),
     textposition:'outside',
     textfont:{ size:11, color:'#8892a8' },
     hovertemplate:'<b>%{y}</b><br>L/D: %{x:.1f}%<extra></extra>',
@@ -595,7 +595,7 @@ function setYear(y) {
       <td><span class="bank-dot" style="background:${COLORS[BANKS.indexOf(r.bank)]}"></span>${r.bank}</td>
       <td><strong>${(+r.nii).toLocaleString('en',{maximumFractionDigits:0})}</strong></td>
       <td>${(+r.roe).toFixed(1)}</td>
-      <td>${(+r.ci).toFixed(1)}</td>
+      <td>${(+r.cost_to_income).toFixed(1)}</td>
       <td>${(+r.nim).toFixed(2)}</td>
       <td>${fmtBn(r.total_assets)}</td>
     </tr>`).join('');
